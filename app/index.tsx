@@ -53,9 +53,9 @@ const Home = () => {
               </View>
             )}
           </Formik>
-          <View className={"mt-4 border-b border-cyan-300"}>
+          <View className={"mt-4 border-b border-cyan-200"}>
             <Link href={{ pathname: "/(root)" }}>
-              <Text className={"text-cyan-300 pb-4"}>Or Register A New Account</Text>
+              <Text className={"text-cyan-200 pb-4"}>Or Register A New Account</Text>
             </Link>
           </View>
         </View>

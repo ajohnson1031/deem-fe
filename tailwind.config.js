@@ -4,7 +4,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        baseBG: "#003F4E",
+        baseBG: "#1C1917",
+      },
+      width: {
+        85: "85%",
       },
     },
   },
