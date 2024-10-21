@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import GiftCard, { GiftCardData, GiftCardType } from "./GiftCard";
 
 interface GiftCardListProps {
@@ -27,21 +27,16 @@ const tempCards: GiftCardData[] = [
 const GiftCardList: FC<GiftCardListProps> = ({ data = tempCards }) => {
   const [selectedCard, setSelectedCard] = useState<GiftCardData | null>(null);
 
-  const handleCardSelection = (card: GiftCardData) => setSelectedCard(card);
+  const handleCardSelection = (card: GiftCardData) => setSelectedCard(card === selectedCard ? null : card);
 
   return (
-    <View>
-      {!!selectedCard ? (
-        <View>
-          <GiftCard card={selectedCard} onPress={() => setSelectedCard(null)} />
-        </View>
-      ) : (
-        <ScrollView>
-          {data.map((card, i) => (
-            <GiftCard key={card.id} card={card} onPress={() => handleCardSelection(card)} index={i} />
-          ))}
-        </ScrollView>
-      )}
+    <View className="flex-1">
+      <View className="flex-1 relative">
+        {data.map((card, i) => (
+          <GiftCard key={card.id} card={card} onPress={() => handleCardSelection(card)} index={i} selectedCard={selectedCard} />
+        ))}
+      </View>
+      {/* Display transactions */}
     </View>
   );
 };
