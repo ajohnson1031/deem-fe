@@ -1,6 +1,7 @@
 import cn from "classnames";
 import React, { FC } from "react";
 import { Image, ImageSourcePropType, Text, View } from "react-native";
+import { GiftCardType } from "./GiftCard";
 
 interface AvatarCardProps {
   variant?: AvatarCardVariant;
@@ -15,30 +16,32 @@ export enum AvatarCardVariant {
   CC = "creditCard",
 }
 
-export enum GiftCardType {
-  VISA = "Visa",
-  MASTERCARD = "MasterCard",
-}
-
 const AvatarCard: FC<AvatarCardProps> = ({ variant = AvatarCardVariant.DEFAULT, cardType = GiftCardType.VISA, imageSrc, bodyText, className }) => {
   const cardImages: Record<string, ImageSourcePropType> = {
-    default: require("@/assets/images/react-logo.png"), // TODO: Replace with custom default image
     visa: require("@/assets/images/visa-logo.png"),
     mastercard: require("@/assets/images/mc-logo.png"),
   };
 
+  const defaultAvatar = imageSrc ? (
+    <Image source={imageSrc} width={48} height={48} className={"rounded-full bg-base-50 w-12 h-12"} />
+  ) : (
+    <View className={"rounded-full bg-base-50 w-12 h-12 flex justify-center items-center"}>
+      <Text className={"text-3xl font-bold"}>A</Text>
+    </View>
+  );
+
   const cardVariants: Record<string, JSX.Element> = {
     default: (
-      <View className={"flex flex-row gap-4"}>
-        <Image source={imageSrc || cardImages.default} width={48} height={48} className={"rounded-full bg-white/5 w-12 h-12"} />
+      <View className={cn("flex flex-row gap-4 p-4 bg-white", className)}>
+        {defaultAvatar}
         <View>
-          <Text className={"text-white text-xs mb-0.5"}>Total Balance</Text>
-          <Text className={"text-white text-xl font-bold"}>{bodyText}</Text>
+          <Text className={"text-slate-900 text-xs mb-0.5"}>Total Balance</Text>
+          <Text className={"text-slate-900 text-xl font-bold"}>{bodyText}</Text>
         </View>
       </View>
     ),
     creditCard: (
-      <View className={"flex flex-row gap-4"}>
+      <View className={cn("flex flex-row gap-4 p-4", className)}>
         <Image source={cardType === GiftCardType.VISA ? cardImages.visa : cardImages.mastercard} width={48} height={48} className={"rounded-full bg-white/5 w-12 h-12"} />
         <View>
           <Text className={"text-white text-md font-semibold mb-2"}>{`${cardType} Gift Card`}</Text>
@@ -48,7 +51,7 @@ const AvatarCard: FC<AvatarCardProps> = ({ variant = AvatarCardVariant.DEFAULT, 
     ),
   };
 
-  return <View className={cn("w-85 p-4 rounded-lg bg-stone-950", className)}>{cardVariants[variant]}</View>;
+  return <View className={cn("w-full rounded-lg bg-stone-950 overflow-hidden", className)}>{cardVariants[variant]}</View>;
 };
 
 export default AvatarCard;

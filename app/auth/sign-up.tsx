@@ -1,7 +1,6 @@
 import Divider from "@/components/Divider";
 import { capitalize } from "@/helpers";
 import { Link, useRouter } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import { Formik } from "formik";
 import React from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
@@ -32,7 +31,6 @@ const SignUp = () => {
 
   return (
     <>
-      <StatusBar style="light" />
       <View className={"flex-1 justify-center bg-cyan-600"}>
         <View className={"absolute top-0 right-0 bottom-0 left-0 justify-center items-center bg-black/50"}>
           <Text className={"text-white text-6xl font-extrabold"}>Deem</Text>

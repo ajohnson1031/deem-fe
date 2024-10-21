@@ -1,12 +1,15 @@
-import AvatarCard, { AvatarCardVariant, GiftCardType } from "@/components/AvatarCard";
+import AvatarCard from "@/components/AvatarCard";
+import GiftCardList from "@/components/GiftCardList";
+import Spacer from "@/components/Spacer";
 import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 
 const HomePage = () => {
   return (
-    <View className={"absolute top-0 left-0 right-0 bottom-0 justify-center items-center bg-baseBG"}>
-      <AvatarCard variant={AvatarCardVariant.CC} cardType={GiftCardType.MASTERCARD} bodyText={"6458 6354 7909 0001"} />
-      <Text className={"text-4xl text-white font-bold"}>Home Page</Text>
+    <View className={"flex-1 pt-20 px-5 bg-base-50"}>
+      <AvatarCard bodyText={"$56,980.00"} />
+      <Spacer />
+      <GiftCardList />
     </View>
   );
 };

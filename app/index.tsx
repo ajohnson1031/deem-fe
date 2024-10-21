@@ -1,7 +1,6 @@
 import Divider from "@/components/Divider";
 import { capitalize } from "@/helpers";
 import { Link, useRouter } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import { Formik } from "formik";
 import React from "react";
 import { Text, TextInput, View } from "react-native";
@@ -27,11 +26,10 @@ const Home = () => {
 
   return (
     <>
-      <StatusBar style="light" />
-      <View className={"flex-1 justify-center bg-baseBG"}>
+      <View className={"flex-1 justify-center bg-base-50"}>
         <View className={"absolute top-0 right-0 bottom-0 left-0 justify-center items-center"}>
-          <Text className={"text-white text-6xl font-extrabold"}>Deem</Text>
-          <Text className={"text-white text-[13px]"}>Making Every Penny Count</Text>
+          <Text className={"text-stone-900 text-6xl font-extrabold"}>Deem</Text>
+          <Text className={"text-stone-900 text-[13px]"}>Making Every Penny Count</Text>
 
           <Divider />
 
@@ -40,23 +38,25 @@ const Home = () => {
               <View className={"w-3/4"}>
                 <TextInput
                   autoCapitalize={"none"}
-                  className={"bg-black/30 w-full p-2 rounded text-white"}
+                  className={"bg-slate-900/10 w-full p-2 rounded text-stone-900"}
                   placeholder={"Login with email..."}
                   onChangeText={handleChange("email")}
                   onBlur={handleBlur("email")}
                   value={values.email}
                   keyboardType={"email-address"}
-                  placeholderTextColor={"rgba(255,255,255,0.5)"}
+                  placeholderTextColor={"#57534E"}
                   onSubmitEditing={() => handleSubmit({ values, errors })}
                 />
                 {errors.email && touched.email && <Text className={"text-red-300 text-center mt-2"}>{capitalize(errors.email)}</Text>}
               </View>
             )}
           </Formik>
-          <View className={"mt-4 border-b border-cyan-200"}>
-            <Link href={{ pathname: "/(root)" }}>
-              <Text className={"text-cyan-200 pb-4"}>Or Register A New Account</Text>
-            </Link>
+          <View className={"mt-4 bg-mango-500 py-2 px-4 rounded-full"}>
+            <View className={"border-b border-white"}>
+              <Link href={{ pathname: "/(root)" }}>
+                <Text className={"text-white pb-4"}>Or Register A New Account</Text>
+              </Link>
+            </View>
           </View>
         </View>
       </View>

@@ -19,16 +19,16 @@ const TopMenuBar: FC<NavbarProps> = () => {
   console.log(segments);
 
   return (
-    <View className={"flex-row justify-between items-center px-6 fixed left-0 top-20 elevation-24 z-50"}>
+    <View className={"flex-row justify-between items-center px-4 fixed left-0 top-20 elevation-24 z-50"}>
       {isRoot ? (
         <TouchableOpacity
           onPress={() => {
             router.push("./");
             setActiveTab(null);
           }}
-          className={"bg-white/5 p-3 rounded-full"}
+          className={"p-3 rounded-full"}
         >
-          <Ionicons name={"arrow-back"} size={28} color={"white"} />
+          <Ionicons name={"arrow-back"} size={28} color={"#1c1917"} />
         </TouchableOpacity>
       ) : (
         <View className={"w-10"} />
@@ -43,37 +43,33 @@ const BottomMenuBar: FC<NavbarProps> = () => {
   const [activeTab, setActiveTab] = [useAtomValue(tabState), useSetAtom(tabState)];
 
   return (
-    <View className={"flex-row justify-between items-center py-2 px-2 fixed left-0 bottom-12 elevation-24 z-50 bg-white/5 rounded-full w-[85%] mx-auto"}>
+    <View className={"flex-row justify-between items-center py-2 px-2 fixed left-0 bottom-12 elevation-24 z-50 bg-base-100 rounded-full w-[85%] mx-auto"}>
       <TouchableOpacity
         onPress={() => {
           router.push("./cards");
           setActiveTab("cards");
         }}
-        className={cn("opacity-60 h-16 w-16 flex justify-center items-center bg-white/10 rounded-full", { "opacity-100 bg-white": activeTab === "cards" })}
+        className={cn("h-16 w-16 flex justify-center items-center rounded-full", { "bg-slate-900": activeTab === "cards" })}
       >
-        <MaterialCommunityIcons
-          name={activeTab === "cards" ? "credit-card-multiple" : "credit-card-multiple-outline"}
-          size={28}
-          color={activeTab === "cards" ? "#1c1917" : "white"}
-        />
+        <MaterialCommunityIcons name={activeTab === "cards" ? "credit-card-chip" : "credit-card-chip-outline"} size={28} color={activeTab === "cards" ? "white" : "#1c1917"} />
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
           router.push("./wallet");
           setActiveTab("wallet");
         }}
-        className={cn("opacity-60 h-16 w-16 flex justify-center items-center bg-white/10 rounded-full", { "opacity-100 bg-white": activeTab === "wallet" })}
+        className={cn("h-16 w-16 flex justify-center items-center rounded-full", { "bg-slate-900": activeTab === "wallet" })}
       >
-        <MaterialCommunityIcons name={activeTab === "wallet" ? "wallet" : "wallet-outline"} size={28} color={activeTab === "wallet" ? "#1c1917" : "white"} />
+        <Ionicons name={activeTab === "wallet" ? "wallet" : "wallet-outline"} size={28} color={activeTab === "wallet" ? "white" : "#1c1917"} />
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
           router.push("./profile");
           setActiveTab("profile");
         }}
-        className={cn("opacity-60 h-16 w-16 flex justify-center items-center bg-white/10 rounded-full", { "opacity-100 bg-white": activeTab === "profile" })}
+        className={cn("h-16 w-16 flex justify-center items-center rounded-full", { "bg-slate-900": activeTab === "profile" })}
       >
-        <FontAwesome name={activeTab === "profile" ? "user" : "user-o"} size={28} color={activeTab === "profile" ? "#1c1917" : "white"} />
+        <FontAwesome name={activeTab === "profile" ? "user" : "user-o"} size={28} color={activeTab === "profile" ? "white" : "#1c1917"} />
       </TouchableOpacity>
     </View>
   );
