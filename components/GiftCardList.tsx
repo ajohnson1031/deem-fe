@@ -7,6 +7,7 @@ interface GiftCardListProps {
   data?: GiftCardData[];
 }
 
+// ! TODO: DELETE THIS WHEN ACTUAL DATA GETS PULLED IN
 const testCardData: GiftCardData[] = [
   {
     id: "1",
@@ -25,6 +26,7 @@ const testCardData: GiftCardData[] = [
   },
 ];
 
+// ! TODO: DELETE THIS WHEN ACTUAL DATA GETS PULLED IN
 export const testTransactionsData: Record<string, TestTransaction[]> = {
   "1": [
     { id: "t1", description: "Coffee Shop", amount: 5.75 },
