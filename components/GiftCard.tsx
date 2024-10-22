@@ -20,17 +20,18 @@ interface GiftCardProps {
   onPress: () => void;
 }
 
-const GiftCard: FC<GiftCardProps> = ({ index = 0, card: { id, cardType, cardNum }, selectedCard = null, onPress }) => {
+const GiftCard: FC<GiftCardProps> = ({ index = 0, card: { id, cardType, cardNum }, selectedCard, onPress }) => {
   const isSelected = selectedCard?.id === id;
   const positionY: SharedValue<number> = useSharedValue(index * 40);
+
   const animatedStyle = useAnimatedStyle(() => ({
     top: withSpring(isSelected ? 0 : positionY.value, { damping: 10, stiffness: 80 }),
     zIndex: isSelected ? 50 : index,
     elevation: isSelected ? index * 10 : index,
-    opacity: withTiming(selectedCard && selectedCard.id === id ? 1 : selectedCard && selectedCard.id !== id ? 0 : 1, { duration: 200 }),
+    opacity: withTiming(selectedCard && isSelected ? 1 : selectedCard && !isSelected ? 0 : 1, { duration: 200 }),
+    pointerEvents: selectedCard && isSelected ? "auto" : selectedCard && !isSelected ? "none" : "auto",
   }));
 
-  console.log({ id, cardType, cardNum });
   return (
     <Pressable onPress={onPress}>
       <Animated.View className={"absolute w-full h-52 rounded-2xl overflow-hidden shadow-giftcard elevation-5 z-10 bg-slate-900 border border-white"} style={animatedStyle}>
