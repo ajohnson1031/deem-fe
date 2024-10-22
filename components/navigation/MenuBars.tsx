@@ -43,13 +43,13 @@ const BottomMenuBar: FC<NavbarProps> = () => {
   const [activeTab, setActiveTab] = [useAtomValue(tabState), useSetAtom(tabState)];
 
   return (
-    <View className={"flex-row justify-between items-center py-2 px-2 fixed left-0 bottom-12 elevation-24 z-50 bg-base-100 rounded-full w-[85%] mx-auto"}>
+    <View className={"flex-row justify-between items-center py-2 px-2 fixed left-0 bottom-12 elevation-24 z-50 bg-base-100 rounded-xl w-[85%] mx-auto"}>
       <TouchableOpacity
         onPress={() => {
           router.push("./cards");
           setActiveTab("cards");
         }}
-        className={cn("h-16 w-16 flex justify-center items-center rounded-full", { "bg-slate-900": activeTab === "cards" })}
+        className={cn("h-14 w-14 flex justify-center items-center rounded-xl", { "bg-slate-900": activeTab === "cards" })}
       >
         <MaterialCommunityIcons name={activeTab === "cards" ? "credit-card-chip" : "credit-card-chip-outline"} size={28} color={activeTab === "cards" ? "white" : "#1c1917"} />
       </TouchableOpacity>
@@ -58,7 +58,7 @@ const BottomMenuBar: FC<NavbarProps> = () => {
           router.push("./wallet");
           setActiveTab("wallet");
         }}
-        className={cn("h-16 w-16 flex justify-center items-center rounded-full", { "bg-slate-900": activeTab === "wallet" })}
+        className={cn("h-14 w-14 flex justify-center items-center rounded-xl", { "bg-slate-900": activeTab === "wallet" })}
       >
         <Ionicons name={activeTab === "wallet" ? "wallet" : "wallet-outline"} size={28} color={activeTab === "wallet" ? "white" : "#1c1917"} />
       </TouchableOpacity>
@@ -67,7 +67,7 @@ const BottomMenuBar: FC<NavbarProps> = () => {
           router.push("./profile");
           setActiveTab("profile");
         }}
-        className={cn("h-16 w-16 flex justify-center items-center rounded-full", { "bg-slate-900": activeTab === "profile" })}
+        className={cn("h-14 w-14 flex justify-center items-center rounded-xl", { "bg-slate-900": activeTab === "profile" })}
       >
         <FontAwesome name={activeTab === "profile" ? "user" : "user-o"} size={28} color={activeTab === "profile" ? "white" : "#1c1917"} />
       </TouchableOpacity>
