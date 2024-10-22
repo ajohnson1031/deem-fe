@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Pressable, Text, View } from "react-native";
-import Animated, { SharedValue, useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
+import Animated, { Easing, SharedValue, useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 
 export interface GiftCardData {
   id: string;
@@ -28,7 +28,7 @@ const GiftCard: FC<GiftCardProps> = ({ index = 0, card: { id, cardType, cardNum 
     top: withSpring(isSelected ? 0 : positionY.value, { damping: 10, stiffness: 80 }),
     zIndex: isSelected ? 50 : index,
     elevation: isSelected ? index * 10 : index,
-    opacity: withTiming(selectedCard && isSelected ? 1 : selectedCard && !isSelected ? 0 : 1, { duration: 200 }),
+    opacity: withTiming(selectedCard && isSelected ? 1 : selectedCard && !isSelected ? 0 : 1, { duration: 150, easing: Easing.inOut(Easing.quad) }),
     pointerEvents: selectedCard && isSelected ? "auto" : selectedCard && !isSelected ? "none" : "auto",
   }));
 

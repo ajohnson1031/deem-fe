@@ -1,12 +1,13 @@
 import React, { FC, useState } from "react";
 import { View } from "react-native";
 import GiftCard, { GiftCardData, GiftCardType } from "./GiftCard";
+import { TestTransaction } from "./TransactionCard";
 
 interface GiftCardListProps {
   data?: GiftCardData[];
 }
 
-const tempCards: GiftCardData[] = [
+const testCardData: GiftCardData[] = [
   {
     id: "1",
     cardType: GiftCardType.VISA,
@@ -24,7 +25,22 @@ const tempCards: GiftCardData[] = [
   },
 ];
 
-const GiftCardList: FC<GiftCardListProps> = ({ data = tempCards }) => {
+export const testTransactionsData: Record<string, TestTransaction[]> = {
+  "1": [
+    { id: "t1", description: "Coffee Shop", amount: 5.75 },
+    { id: "t2", description: "Grocery Store", amount: 35.2 },
+  ],
+  "2": [
+    { id: "t1", description: "Gas Station", amount: 40.0 },
+    { id: "t2", description: "Restaurant", amount: 65.5 },
+  ],
+  "3": [
+    { id: "t1", description: "Online Purchase", amount: 120.75 },
+    { id: "t2", description: "Streaming Service", amount: 15.99 },
+  ],
+};
+
+const GiftCardList: FC<GiftCardListProps> = ({ data = testCardData }) => {
   const [selectedCard, setSelectedCard] = useState<GiftCardData | null>(null);
 
   const handleCardSelection = (card: GiftCardData) => setSelectedCard(card === selectedCard ? null : card);

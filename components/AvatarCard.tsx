@@ -1,6 +1,7 @@
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import cn from "classnames";
 import React, { FC } from "react";
-import { Image, ImageSourcePropType, Text, View } from "react-native";
+import { Image, ImageSourcePropType, Text, TouchableOpacity, View } from "react-native";
 import { GiftCardType } from "./GiftCard";
 
 interface AvatarCardProps {
@@ -32,12 +33,17 @@ const AvatarCard: FC<AvatarCardProps> = ({ variant = AvatarCardVariant.DEFAULT, 
 
   const cardVariants: Record<string, JSX.Element> = {
     default: (
-      <View className={cn("flex flex-row gap-4 p-4 bg-white", className)}>
-        {defaultAvatar}
-        <View>
-          <Text className={"text-slate-900 text-xs mb-0.5"}>Total Balance</Text>
-          <Text className={"text-slate-900 text-xl font-bold"}>{bodyText}</Text>
+      <View className={cn("flex flex-row p-4 justify-between bg-white", className)}>
+        <View className={"flex flex-row gap-4"}>
+          {defaultAvatar}
+          <View>
+            <Text className={"text-slate-900 text-xs mb-0.5"}>Total Balance</Text>
+            <Text className={"text-slate-900 text-xl font-bold"}>{bodyText}</Text>
+          </View>
         </View>
+        <TouchableOpacity onPress={() => {}} className={"h-12 w-12 flex justify-center items-center rounded-full bg-base-50"}>
+          <MaterialCommunityIcons name={"scale-unbalanced"} size={28} color={"#1C1917"} />
+        </TouchableOpacity>
       </View>
     ),
     creditCard: (
