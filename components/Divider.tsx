@@ -5,7 +5,7 @@ interface DividerProps {
   theme?: string;
 }
 
-enum DividerThemes {
+export enum DividerThemes {
   LIGHT = "h-[1px] w-3/4 bg-white/30 my-4",
   DARK = "h-[1px] w-3/4 bg-gray-600 my-4",
 }

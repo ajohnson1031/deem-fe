@@ -27,8 +27,12 @@ const TransactionCardList: FC<TransactionCardListProps> = ({ transactions }) => 
   }, []);
 
   return (
-    <Animated.View style={animatedStyle}>
-      <FlatList data={transactions} keyExtractor={(item) => item.id} renderItem={({ item }) => <TransactionCard key={item.id} transaction={item} />} />
+    <Animated.View style={animatedStyle} className={"rounded-lg overflow-hidden"}>
+      <FlatList
+        data={transactions}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item, index }) => <TransactionCard key={item.id} transaction={item} isLast={index + 1 === transactions.length} />}
+      />
     </Animated.View>
   );
 };
