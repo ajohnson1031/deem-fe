@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { View } from "react-native";
 import GiftCard, { GiftCardData, GiftCardType } from "./GiftCard";
-import { TestTransaction } from "./TransactionCard";
+import TransactionCardList, { TestTransaction } from "./TransactionCardList";
 
 interface GiftCardListProps {
   data?: GiftCardData[];
@@ -49,12 +49,10 @@ const GiftCardList: FC<GiftCardListProps> = ({ data = testCardData }) => {
 
   return (
     <View className="flex-1">
-      <View className="flex-1 relative">
-        {data.map((card, i) => (
-          <GiftCard key={card.id} card={card} onPress={() => handleCardSelection(card)} index={i} selectedCard={selectedCard} />
-        ))}
-      </View>
-      {/* Display transactions */}
+      {data.map((card, i) => (
+        <GiftCard key={card.id} card={card} onPress={() => handleCardSelection(card)} index={i} selectedCard={selectedCard} />
+      ))}
+      {!!selectedCard && <TransactionCardList transactions={testTransactionsData[selectedCard.id]} />}
     </View>
   );
 };
