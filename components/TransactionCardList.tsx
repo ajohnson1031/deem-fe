@@ -27,7 +27,7 @@ const TransactionCardList: FC<TransactionCardListProps> = ({ transactions }) => 
   }, []);
 
   return (
-    <Animated.View style={animatedStyle} className={"rounded-lg overflow-hidden"}>
+    <Animated.View style={animatedStyle}>
       <View>
         <Text className={"text-lg font-semibold mb-1"}>Latest Transactions</Text>
       </View>
@@ -35,6 +35,7 @@ const TransactionCardList: FC<TransactionCardListProps> = ({ transactions }) => 
         data={transactions}
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => <TransactionCard key={item.id} transaction={item} isLast={index + 1 === transactions.length} />}
+        className={"rounded-lg overflow-hidden"}
       />
     </Animated.View>
   );

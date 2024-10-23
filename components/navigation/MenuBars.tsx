@@ -1,12 +1,13 @@
 import { tabState } from "@/state/cards";
 import { Ionicons } from "@expo/vector-icons";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import cn from "classnames";
 import { useRouter, useSegments } from "expo-router";
 import { useAtomValue, useSetAtom } from "jotai";
 import React, { FC } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 interface NavbarProps {}
 
@@ -15,15 +16,35 @@ const TopMenuBar: FC<NavbarProps> = () => {
   const segments = useSegments();
   const setActiveTab = useSetAtom(tabState);
 
-  const isRoot = segments.length > 1;
+  const isNotRoot = segments.length > 1;
+  const isProfile = segments[0] === "profile";
+
+  const topRightButton: Record<string, JSX.Element> = {
+    wallet: <View className={"w-10"} />,
+    cards: (
+      <TouchableOpacity onPress={() => void 0} className={"p-3"}>
+        <AntDesign name="plussquare" size={32} color="black" />
+      </TouchableOpacity>
+    ),
+    profile: (
+      <TouchableOpacity onPress={() => void 0} className={"p-3"}>
+        <Text className={"text-base font-bold"}>Edit</Text>
+      </TouchableOpacity>
+    ),
+  };
+
   console.log(segments);
 
   return (
     <View className={"flex-row justify-between items-center px-4 fixed left-0 top-20 elevation-24 z-50"}>
-      {isRoot ? (
+      {isNotRoot || isProfile ? (
         <TouchableOpacity
           onPress={() => {
-            router.push("./");
+            if (isProfile) {
+              router.push("../(root)");
+            } else {
+              router.push("./");
+            }
             setActiveTab(null);
           }}
           className={"p-3 rounded-full"}
@@ -33,7 +54,7 @@ const TopMenuBar: FC<NavbarProps> = () => {
       ) : (
         <View className={"w-10"} />
       )}
-      <View className={"w-10"} />
+      {topRightButton[segments[1] || segments[0]]}
     </View>
   );
 };
@@ -64,7 +85,7 @@ const BottomMenuBar: FC<NavbarProps> = () => {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
-          router.push("./profile");
+          router.push("../profile");
           setActiveTab("profile");
         }}
         className={cn("h-14 w-14 flex justify-center items-center rounded-xl", { "bg-slate-900": activeTab === "profile" })}

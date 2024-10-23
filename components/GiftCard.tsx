@@ -36,7 +36,7 @@ const GiftCard: FC<GiftCardProps> = ({ index = 0, card: { id, cardType, cardNum 
     <Pressable onPress={onPress}>
       <Animated.View className={"absolute w-full h-52 rounded-xl overflow-hidden shadow-giftcard elevation-5 z-10 bg-slate-900 border border-white"} style={animatedStyle}>
         <View></View>
-        <Text className={"absolute bottom-2.5 left-2.5 text-white text-lg"}>• • • • {cardNum.slice(cardNum.length - 4)}</Text>
+        <Text className={"absolute bottom-2.5 left-4 text-white text-lg"}>• • • • {cardNum.slice(cardNum.length - 4)}</Text>
       </Animated.View>
     </Pressable>
   );

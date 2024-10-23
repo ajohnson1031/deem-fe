@@ -1,6 +1,9 @@
+import { CircleColors } from "@/constants/Colors";
+import { userState } from "@/state/user";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import cn from "classnames";
-import React, { FC } from "react";
+import { useAtomValue, useSetAtom } from "jotai";
+import React, { FC, useEffect } from "react";
 import { Image, ImageSourcePropType, Text, TouchableOpacity, View } from "react-native";
 import { GiftCardType } from "./GiftCard";
 
@@ -23,11 +26,13 @@ const AvatarCard: FC<AvatarCardProps> = ({ variant = AvatarCardVariant.DEFAULT, 
     mastercard: require("@/assets/images/mc-logo.png"),
   };
 
+  const [user, setUser] = [useAtomValue(userState), useSetAtom(userState)];
+
   const defaultAvatar = imageSrc ? (
     <Image source={imageSrc} width={48} height={48} className={"rounded-full bg-base-50 w-12 h-12"} />
   ) : (
-    <View className={"rounded-full bg-base-50 w-12 h-12 flex justify-center items-center"}>
-      <Text className={"text-3xl font-bold"}>A</Text>
+    <View className={"rounded-full w-12 h-12 flex justify-center items-center"} style={{ backgroundColor: user.color || CircleColors[5] }}>
+      <Text className={"text-3xl font-bold text-white"}>{user.name?.slice(0, 1).toUpperCase() ?? user.email.slice(0, 1).toUpperCase()}</Text>
     </View>
   );
 
@@ -41,8 +46,8 @@ const AvatarCard: FC<AvatarCardProps> = ({ variant = AvatarCardVariant.DEFAULT, 
             <Text className={"text-slate-900 text-xl font-bold"}>{bodyText}</Text>
           </View>
         </View>
-        <TouchableOpacity onPress={() => {}} className={"h-12 w-12 flex justify-center items-center rounded-full bg-base-50"}>
-          <MaterialCommunityIcons name={"scale-unbalanced"} size={28} color={"#1C1917"} />
+        <TouchableOpacity onPress={() => {}} className={"h-fit w-fit flex justify-center mr-1"}>
+          <MaterialCommunityIcons name={"eye-outline"} size={24} color={"#1C1917"} />
         </TouchableOpacity>
       </View>
     ),
@@ -56,6 +61,10 @@ const AvatarCard: FC<AvatarCardProps> = ({ variant = AvatarCardVariant.DEFAULT, 
       </View>
     ),
   };
+
+  useEffect(() => {
+    if (!user.color) setUser({ ...user, color: `${CircleColors[Math.floor(Math.random() * CircleColors.length)]}` });
+  }, [user]);
 
   return <View className={cn("w-full rounded-lg bg-stone-950 overflow-hidden", className)}>{cardVariants[variant]}</View>;
 };
