@@ -36,7 +36,7 @@ const TopMenuBar: FC<NavbarProps> = () => {
   console.log(segments);
 
   return (
-    <View className={"flex-row justify-between items-center px-4 fixed left-0 top-20 elevation-24 z-50"}>
+    <View className={"flex-row justify-between items-center px-4 fixed left-0 top-16 elevation-24 z-50"}>
       {isNotRoot || isProfile ? (
         <TouchableOpacity
           onPress={() => {
