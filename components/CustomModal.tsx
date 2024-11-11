@@ -18,7 +18,7 @@ export enum CustomModalVariant {
 }
 
 const variantHeaders = {
-  [CustomModalVariant.INFO]: "Good to Know...",
+  [CustomModalVariant.INFO]: "Things to Know...",
   [CustomModalVariant.WARN]: "Warning!",
 };
 

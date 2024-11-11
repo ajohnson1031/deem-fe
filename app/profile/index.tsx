@@ -4,17 +4,19 @@ import ProfileImage from "@/components/ProfileImage";
 import { NAME_VALIDATOR, USERNAME_VALIDATOR } from "@/regex";
 import { userState } from "@/state/user";
 import { Ionicons } from "@expo/vector-icons";
+import cn from "classnames";
 import { Link } from "expo-router";
 import { Formik } from "formik";
 import { useAtomValue, useSetAtom } from "jotai";
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { Feather } from "react-native-vector-icons";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object().shape({
-  firstname: Yup.string().matches(NAME_VALIDATOR, "Invalid first name"),
-  lastname: Yup.string().matches(NAME_VALIDATOR, "Invalid last name"),
+  firstname: Yup.string().matches(NAME_VALIDATOR, "Invalid first name").min(3, "Please enter 3 chars. min."),
+  lastname: Yup.string().matches(NAME_VALIDATOR, "Invalid last name").min(3, "Please enter 3 chars. min."),
   username: Yup.string().matches(USERNAME_VALIDATOR, "Invalid username"),
 });
 
@@ -91,17 +93,22 @@ const Profile = () => {
                   editable={username.length <= 0}
                   autoCapitalize="none"
                   error={errors.username}
+                  icon={<Feather name="at-sign" size={18} color="#1c1917" />}
                 />
-                {errors.username && touched.username && <Text className="text-sm text-red-600">Please enter a valid username</Text>}
+                {errors.username && <Text className="text-sm text-red-600">Please enter a valid username</Text>}
                 <CustomInput label="Email" value={email} editable={false} />
               </View>
 
               {/* Submit Button */}
-              <TouchableOpacity className="mt-2" onPress={() => handleSubmit(values, errors)}>
-                <View className="p-2 bg-green-500 rounded-md">
-                  <Text className="text-base text-white font-semibold text-center">Save Changes</Text>
+              <Pressable
+                className={cn("mt-2 p-2 bg-green-500 rounded-md", { "bg-green-500/50": values.firstname.length < 3 || values.lastname.length < 3 })}
+                onPress={() => handleSubmit(values, errors)}
+                disabled={values.firstname.length < 3 || values.lastname.length < 3}
+              >
+                <View className="">
+                  <Text className="text-base text-white font-bold text-center">Save Changes</Text>
                 </View>
-              </TouchableOpacity>
+              </Pressable>
             </View>
           )}
         </Formik>
@@ -125,7 +132,7 @@ const InfoBody = (
     <View className="flex flex-row gap-2 mb-3">
       <Text>&#8226;</Text>
       <View>
-        <Text className="mb-1">Usernames are permanent. Once saved, it cannot be changed from within the app.</Text>
+        <Text className="mb-1">Usernames are permanent. Once saved, your username cannot be changed from within the app.</Text>
         <Text>
           For any username change requests, reach out to our support team&nbsp;
           {/* // TODO: Update with proper email address */}

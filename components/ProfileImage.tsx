@@ -22,15 +22,15 @@ const ProfileImage: FC = () => {
         <TouchableOpacity onPress={handleChange}>{!profileImage && <Ionicons name="camera-outline" size={32} color="#a8a29e" />}</TouchableOpacity>
       </View>
       {!!profileImage && (
-        <View className="flex flex-row gap-4">
+        <View className="flex flex-row gap-2">
           <TouchableOpacity onPress={handleChange}>
-            <View className="bg-sky-600 py-1 !w-24 rounded-md">
-              <Text className="text-base text-white w-fit text-center">Change Pic</Text>
+            <View className="bg-sky-600 py-1.5 !w-24 rounded-md">
+              <Text className="text-md font-semibold text-white w-fit text-center">Change Pic</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleDelete}>
-            <View className="bg-base-50 py-1 !w-24 rounded-md border border-base-200">
-              <Text className="text-base text-red-600 w-fit text-center">Delete Pic</Text>
+            <View className="bg-base-50 py-1.5 !w-24 rounded-md border border-base-200">
+              <Text className="text-md font-semibold text-red-600 w-fit text-center">Delete Pic</Text>
             </View>
           </TouchableOpacity>
         </View>
