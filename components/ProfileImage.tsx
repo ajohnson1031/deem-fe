@@ -9,6 +9,7 @@ const ProfileImage: FC = () => {
   const [user, setUser] = [useAtomValue(userState), useSetAtom(userState)];
   const { profileImage } = user;
 
+  // TODO: Flesh out change/delete functionality
   const handleChange = () => {};
   const handleDelete = () => {
     setUser({ ...user, profileImage: null });

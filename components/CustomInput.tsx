@@ -21,7 +21,7 @@ const CustomInput: FC<CustomInputProps> = ({ value, label, placeholder, wrapperC
       {!!label && <Text className="text-xs font-semibold mb-1">{label}</Text>}
       <TextInput
         data-testid={label?.split(" ").join("").toLowerCase()}
-        className={cn("bg-white w-full p-2 rounded text-stone-900 border border-base-100", { "bg-base-100 border border-base-200 text-stone-500": !editable })}
+        className={cn("bg-white w-full p-2 rounded text-stone-900 border border-base-100", { "bg-base-100 border border-base-200 text-stone-500 font-semibold": !editable })}
         autoCapitalize={autoCapitalize}
         value={value}
         placeholder={placeholder}
