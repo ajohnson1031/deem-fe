@@ -28,34 +28,45 @@ type FormValues = {
 
 const Profile = () => {
   const [user, setUser] = [useAtomValue(userState), useSetAtom(userState)];
-  const [formValues, setFormValues] = useState({});
-  const [modalOpen, setModalOpen] = useState({ info: false, warn: false });
-
   const { firstname, lastname, username, email } = user;
 
-  // const handleSubmit = (values: FormValues, errors: any) => {
-  //   // TODO: Complete function that handles updating profile values
-  //   setUser({ ...user, ...values });
-  //   console.log(values, errors);
-  // };
+  const [formValues, setFormValues] = useState({ firstname, lastname, username });
+  const [modalOpen, setModalOpen] = useState({ info: false, warn: false });
 
   const handleSubmit = (values: FormValues, errors: any) => {
     const { firstname, lastname, username } = values;
-    setFormValues(values);
-    if (!!values.username.length) {
+    // Username has not been previously saved
+    if (!!username.length && !formValues.username.length) {
+      setFormValues(values); // ? Set values for modal
       setModalOpen({ ...modalOpen, warn: true });
       return;
     }
-    // TODO: Complete function that handles updating profile values
 
-    setUser({ ...user, firstname, lastname });
-    console.log(user);
+    // First name and last name values have not changed
+    if (firstname === formValues.firstname && lastname === formValues.lastname) {
+      // ? If no change, its a noop
+    } else {
+      // TODO: Complete function that handles updating profile values
+      console.log(values);
+      setUser({ ...user, firstname, lastname });
+    }
   };
 
   return (
     <View className={"flex-1 items-center pt-20"}>
       <CustomModal variant={CustomModalVariant.INFO} open={modalOpen.info} content={InfoBody} onClose={() => setModalOpen({ ...modalOpen, info: false })} />
-      <CustomModal variant={CustomModalVariant.WARN} open={modalOpen.warn} content={WarningBody} onClick={() => {}} onClose={() => setModalOpen({ ...modalOpen, warn: false })} />
+      <CustomModal
+        variant={CustomModalVariant.WARN}
+        open={modalOpen.warn}
+        content={WarningBody}
+        onClick={() => {
+          // TODO: Complete function that handles updating profile values
+          console.log(formValues);
+          setUser({ ...user, ...formValues });
+          setModalOpen({ ...modalOpen, warn: false });
+        }}
+        onClose={() => setModalOpen({ ...modalOpen, warn: false })}
+      />
 
       {/* Profile Image */}
       <ProfileImage />
@@ -68,7 +79,7 @@ const Profile = () => {
           </TouchableOpacity>
         </View>
         <Formik initialValues={{ firstname, lastname, username }} validationSchema={validationSchema} onSubmit={handleSubmit}>
-          {({ handleChange, values, errors, touched }) => (
+          {({ handleChange, values, errors }) => (
             <View>
               <View className={"flex flex-row"}>
                 {/* Name Fields */}
@@ -100,7 +111,7 @@ const Profile = () => {
               <View>
                 <CustomInput
                   label="Username"
-                  value={username.length > 0 ? `@${values.username}` : values.username}
+                  value={username.length > 0 ? `${values.username}` : values.username}
                   placeholder={"Your username..."}
                   onChange={(value: string) => {
                     handleChange("username")(value);
@@ -108,7 +119,7 @@ const Profile = () => {
                   editable={username.length <= 0}
                   autoCapitalize="none"
                   error={errors.username}
-                  icon={<Feather name="at-sign" size={18} color="#1c1917" />}
+                  icon={<Feather name="at-sign" size={18} color="#44403C" />}
                 />
                 {errors.username && <Text className="text-sm text-red-600">Please enter a valid username</Text>}
                 <CustomInput label="Email" value={email} editable={false} />

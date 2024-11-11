@@ -33,15 +33,16 @@ const CustomModal: FC<CustomModalProps> = ({ variant, open, content, footerButto
   return (
     <Modal animationType="fade" transparent>
       <View className="flex flex-1 flex-col items-center bg-stone-950/50">
-        <View className="my-auto w-85 p-6 bg-white rounded-lg ">
-          <TouchableOpacity className="ml-auto -mr-2 -mt-1 mb-4" onPress={onClose}>
-            <Ionicons name="close-outline" size={32} color="black" />
-          </TouchableOpacity>
-
+        <View className="w-85 my-auto px-6 bg-white rounded-lg pt-1 pb-5">
           {/* Header */}
-          <View className="flex flex-row gap-2 justify-center items-center pb-3">
-            {icons[variant]}
-            <Text className="text-xl font-semibold">{variantHeaders[variant]}</Text>
+          <View className="flex flex-row items-center justify-between">
+            <View className="flex gap-1 flex-row items-center py-2">
+              <View>{icons[variant]}</View>
+              <Text className="text-xl font-semibold">{variantHeaders[variant]}</Text>
+            </View>
+            <TouchableOpacity className="ml-auto" onPress={onClose}>
+              <Ionicons name="close-outline" size={32} color="black" />
+            </TouchableOpacity>
           </View>
 
           {/* Content */}
