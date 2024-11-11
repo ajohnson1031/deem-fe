@@ -24,7 +24,7 @@ const variantHeaders = {
 
 const icons = {
   [CustomModalVariant.INFO]: <Ionicons name="information-circle-sharp" size={40} color="#0284c7" />,
-  [CustomModalVariant.WARN]: <Ionicons name="warning-sharp" size={40} color="#FBBF24" />,
+  [CustomModalVariant.WARN]: <Ionicons name="warning" size={40} color="#F97316" />,
 };
 
 const CustomModal: FC<CustomModalProps> = ({ variant, open, content, footerButtonText, onClick, onClose }) => {
@@ -64,11 +64,11 @@ interface ModalFooterProps {
 const ModalFooter: FC<ModalFooterProps> = ({ buttonText = "Submit", onClick, onClose }) => {
   return (
     <View className="flex flex-row gap-2 ml-auto mt-3">
-      <TouchableOpacity className="p-2 border-2 rounded-md w-20 flex flex-row justify-center" onPress={onClose}>
+      <TouchableOpacity className="p-2 border-2 box-border rounded-md w-20 flex flex-row justify-center" onPress={onClose}>
         <Text className="font-semibold text-stone-950">Close</Text>
       </TouchableOpacity>
       {!!onClick && (
-        <TouchableOpacity className="bg-sky-600 p-2 rounded-md min-w-20 w-fit flex flex-row justify-center" onPress={onClick}>
+        <TouchableOpacity className="bg-sky-600 border-2 border-sky-600 p-2 rounded-md min-w-20 w-fit flex flex-row justify-center" onPress={onClick}>
           <Text className="font-semibold text-white">{buttonText}</Text>
         </TouchableOpacity>
       )}

@@ -28,19 +28,34 @@ type FormValues = {
 
 const Profile = () => {
   const [user, setUser] = [useAtomValue(userState), useSetAtom(userState)];
+  const [formValues, setFormValues] = useState({});
   const [modalOpen, setModalOpen] = useState({ info: false, warn: false });
 
   const { firstname, lastname, username, email } = user;
 
+  // const handleSubmit = (values: FormValues, errors: any) => {
+  //   // TODO: Complete function that handles updating profile values
+  //   setUser({ ...user, ...values });
+  //   console.log(values, errors);
+  // };
+
   const handleSubmit = (values: FormValues, errors: any) => {
+    const { firstname, lastname, username } = values;
+    setFormValues(values);
+    if (!!values.username.length) {
+      setModalOpen({ ...modalOpen, warn: true });
+      return;
+    }
     // TODO: Complete function that handles updating profile values
-    setUser({ ...user, ...values });
-    console.log(values, errors);
+
+    setUser({ ...user, firstname, lastname });
+    console.log(user);
   };
 
   return (
     <View className={"flex-1 items-center pt-20"}>
       <CustomModal variant={CustomModalVariant.INFO} open={modalOpen.info} content={InfoBody} onClose={() => setModalOpen({ ...modalOpen, info: false })} />
+      <CustomModal variant={CustomModalVariant.WARN} open={modalOpen.warn} content={WarningBody} onClick={() => {}} onClose={() => setModalOpen({ ...modalOpen, warn: false })} />
 
       {/* Profile Image */}
       <ProfileImage />
@@ -142,6 +157,15 @@ const InfoBody = (
           .
         </Text>
       </View>
+    </View>
+  </View>
+);
+
+const WarningBody = (
+  <View className="w-[90%] mb-5">
+    <View>
+      <Text className="text-lg text-center">Your username is about to be permanently changed.</Text>
+      <Text className="text-lg text-red-600 font-semibold text-center">Are you sure?</Text>
     </View>
   </View>
 );
