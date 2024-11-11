@@ -1,4 +1,4 @@
-import { TopMenuBar } from "@/components/navigation/MenuBars";
+import { BottomMenuBar, TopMenuBar } from "@/components/navigation/MenuBars";
 import { Slot } from "expo-router";
 import { View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -10,6 +10,7 @@ const ProfileLayout = () => {
       <GestureHandlerRootView>
         <Slot />
       </GestureHandlerRootView>
+      <BottomMenuBar />
     </View>
   );
 };

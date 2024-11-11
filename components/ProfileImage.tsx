@@ -28,7 +28,7 @@ const ProfileImage: FC = () => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleDelete}>
-            <View className="bg-base-100 py-1 !w-24 rounded-md">
+            <View className="bg-base-50 py-1 !w-24 rounded-md border border-base-200">
               <Text className="text-base text-red-600 w-fit text-center">Delete Pic</Text>
             </View>
           </TouchableOpacity>

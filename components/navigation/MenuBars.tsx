@@ -7,7 +7,7 @@ import cn from "classnames";
 import { useRouter, useSegments } from "expo-router";
 import { useAtomValue, useSetAtom } from "jotai";
 import React, { FC } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 
 interface NavbarProps {}
 
@@ -26,11 +26,7 @@ const TopMenuBar: FC<NavbarProps> = () => {
         <AntDesign name="plussquare" size={32} color="black" />
       </TouchableOpacity>
     ),
-    profile: (
-      <TouchableOpacity onPress={() => void 0} className={"p-3"}>
-        <Text className={"text-base font-bold"}>Edit</Text>
-      </TouchableOpacity>
-    ),
+    profile: <View className={"w-10"} />,
   };
 
   console.log(segments);
