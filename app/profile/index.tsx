@@ -9,7 +9,7 @@ import { Link } from "expo-router";
 import { Formik } from "formik";
 import { useAtomValue, useSetAtom } from "jotai";
 import React, { useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Feather } from "react-native-vector-icons";
 import * as Yup from "yup";
@@ -35,17 +35,14 @@ const Profile = () => {
 
   const handleSubmit = (values: FormValues, errors: any) => {
     const { firstname, lastname, username } = values;
-    // Username has not been previously saved
-    if (!!username.length && !formValues.username.length) {
-      setFormValues(values); // ? Set values for modal
+    // ? Username has not been previously saved
+    if (username !== user.username) {
       setModalOpen({ ...modalOpen, warn: true });
       return;
     }
 
-    // First name and last name values have not changed
-    if (firstname === formValues.firstname && lastname === formValues.lastname) {
-      // ? If no change, its a noop
-    } else {
+    // ? Only fires if values have changed
+    if (firstname !== formValues.firstname && lastname !== formValues.lastname) {
       // TODO: Complete function that handles updating profile values
       console.log(values);
       setUser({ ...user, firstname, lastname });
@@ -89,6 +86,7 @@ const Profile = () => {
                   placeholder={"Your first name..."}
                   onChange={(value: string) => {
                     handleChange("firstname")(value);
+                    setFormValues({ ...formValues, firstname: value });
                   }}
                   size={"half"}
                   side="left"
@@ -101,6 +99,7 @@ const Profile = () => {
                   placeholder={"Your last name..."}
                   onChange={(value: string) => {
                     handleChange("lastname")(value);
+                    setFormValues({ ...formValues, lastname: value });
                   }}
                   size={"half"}
                   side="right"
@@ -115,6 +114,7 @@ const Profile = () => {
                   placeholder={"Your username..."}
                   onChange={(value: string) => {
                     handleChange("username")(value);
+                    setFormValues({ ...formValues, username: value });
                   }}
                   editable={username.length <= 0}
                   autoCapitalize="none"
@@ -126,7 +126,7 @@ const Profile = () => {
               </View>
 
               {/* Submit Button */}
-              <Pressable
+              <TouchableOpacity
                 className={cn("mt-2 p-2 bg-green-500 rounded-md", { "bg-green-500/50": values.firstname.length < 3 || values.lastname.length < 3 })}
                 onPress={() => handleSubmit(values, errors)}
                 disabled={values.firstname.length < 3 || values.lastname.length < 3}
@@ -134,7 +134,7 @@ const Profile = () => {
                 <View className="">
                   <Text className="text-base text-white font-bold text-center">Save Changes</Text>
                 </View>
-              </Pressable>
+              </TouchableOpacity>
             </View>
           )}
         </Formik>
@@ -149,7 +149,7 @@ const InfoBody = (
   <View className="w-[90%]">
     <View className="flex flex-row gap-2 mb-3">
       <Text>&#8226;</Text>
-      <Text>First and last name fields only accepts letters, hyphens, spaces and dashes. </Text>
+      <Text>First and last name fields only accept letters, hyphens, spaces and dashes. </Text>
     </View>
     <View className="flex flex-row gap-2 mb-3">
       <Text>&#8226;</Text>
