@@ -30,8 +30,8 @@ export enum WALLET_CONVERSION_TYPE {
 
 const testWalletData = {
   balances: {
-    xrp: 1000.67482,
-    usd: 612.89,
+    usd: { name: "U.S. Dollar", type: WALLET_CURRENCY_TYPE.USD, amount: 612.89, color: "bg-green-500" },
+    xrp: { name: "Ripple XRP", type: WALLET_CURRENCY_TYPE.XRP, amount: 1000.67482, color: "bg-sky-500" },
   },
   activity: [
     {

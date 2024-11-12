@@ -127,7 +127,7 @@ const Profile = () => {
 
               {/* Submit Button */}
               <TouchableOpacity
-                className={cn("mt-2 p-2 bg-stone-800 rounded-md", { "bg-stone-800/50": values.firstname.length < 3 || values.lastname.length < 3 })}
+                className={cn("mt-2 p-2 bg-green-500 rounded-md", { "bg-green-500/50": values.firstname.length < 3 || values.lastname.length < 3 })}
                 onPress={() => handleSubmit(values, errors)}
                 disabled={values.firstname.length < 3 || values.lastname.length < 3}
               >

@@ -11,8 +11,8 @@ type WalletActivity = {
 };
 
 type WalletBalance = {
-  xrp: number;
-  usd: number;
+  xrp: { name: string; type: WALLET_CURRENCY_TYPE; amount: number; color: string };
+  usd: { name: string; type: WALLET_CURRENCY_TYPE; amount: number; color: string };
 };
 
 interface WalletProps {

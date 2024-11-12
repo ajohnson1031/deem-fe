@@ -24,7 +24,7 @@ const TopMenuBar: FC<NavbarProps> = () => {
     banking: <View className={"w-10"} />,
     wallet: (
       <TouchableOpacity onPress={() => void 0} className={"p-3"}>
-        {testNotifications.length > 0 && <View className="bg-red-500 rounded-full w-3.5 h-3.5 absolute top-2.5 right-3 z-10 border-2 border-base-50" />}
+        {testNotifications.length > 0 && <View className="bg-mango-500 rounded-full w-3.5 h-3.5 absolute top-2.5 right-3 z-10 border-2 border-base-50" />}
         <RNIonicons name="notifications-outline" size={32} color="#1C1917" />
       </TouchableOpacity>
     ),
