@@ -1,6 +1,6 @@
+import { testNotifications } from "@/app/data/testData";
 import { tabState } from "@/state/cards";
 import { Ionicons } from "@expo/vector-icons";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import cn from "classnames";
@@ -8,6 +8,7 @@ import { useRouter, useSegments } from "expo-router";
 import { useAtomValue, useSetAtom } from "jotai";
 import React, { FC } from "react";
 import { TouchableOpacity, View } from "react-native";
+import { Ionicons as RNIonicons } from "react-native-vector-icons";
 
 interface NavbarProps {}
 
@@ -20,10 +21,16 @@ const TopMenuBar: FC<NavbarProps> = () => {
   const isProfile = segments[0] === "profile";
 
   const topRightButton: Record<string, JSX.Element> = {
-    wallet: <View className={"w-10"} />,
+    banking: <View className={"w-10"} />,
+    wallet: (
+      <TouchableOpacity onPress={() => void 0} className={"p-3"}>
+        {testNotifications.length > 0 && <View className="bg-red-500 rounded-full w-3.5 h-3.5 absolute top-2.5 right-3 z-10 border-2 border-base-50" />}
+        <RNIonicons name="notifications-outline" size={32} color="#1C1917" />
+      </TouchableOpacity>
+    ),
     cards: (
       <TouchableOpacity onPress={() => void 0} className={"p-3"}>
-        <AntDesign name="plussquare" size={32} color="black" />
+        <RNIonicons name="add-circle" size={60} color="#22c55e" />
       </TouchableOpacity>
     ),
     profile: <View className={"w-10"} />,
@@ -61,6 +68,16 @@ const BottomMenuBar: FC<NavbarProps> = () => {
 
   return (
     <View className={"flex-row justify-between items-center py-2 px-2 fixed left-0 bottom-12 elevation-24 z-50 bg-base-100 rounded-xl w-[85%] mx-auto"}>
+      <TouchableOpacity
+        onPress={() => {
+          router.push("./banking");
+          setActiveTab("banking");
+        }}
+        className={cn("h-14 w-14 flex justify-center items-center rounded-xl", { "bg-slate-900": activeTab === "banking" })}
+      >
+        <MaterialCommunityIcons name={activeTab === "banking" ? "bank" : "bank-outline"} size={28} color={activeTab === "banking" ? "white" : "#1c1917"} />
+      </TouchableOpacity>
+
       <TouchableOpacity
         onPress={() => {
           router.push("./cards");

@@ -72,7 +72,7 @@ const Profile = () => {
         <View className="mb-6 pb-3 border-b border-stone-400 flex flex-row justify-between items-center">
           <Text className="text-lg">User Details</Text>
           <TouchableOpacity onPress={() => setModalOpen({ ...modalOpen, info: true })}>
-            <Ionicons name="information-circle-outline" size={24} color="#0284c7" />
+            <Ionicons name="information-circle-outline" size={24} color="#075985" />
           </TouchableOpacity>
         </View>
         <Formik initialValues={{ firstname, lastname, username }} validationSchema={validationSchema} onSubmit={handleSubmit}>
@@ -127,11 +127,11 @@ const Profile = () => {
 
               {/* Submit Button */}
               <TouchableOpacity
-                className={cn("mt-2 p-2 bg-green-500 rounded-md", { "bg-green-500/50": values.firstname.length < 3 || values.lastname.length < 3 })}
+                className={cn("mt-2 p-2 bg-stone-800 rounded-md", { "bg-stone-800/50": values.firstname.length < 3 || values.lastname.length < 3 })}
                 onPress={() => handleSubmit(values, errors)}
                 disabled={values.firstname.length < 3 || values.lastname.length < 3}
               >
-                <View className="">
+                <View>
                   <Text className="text-base text-white font-bold text-center">Save Changes</Text>
                 </View>
               </TouchableOpacity>
@@ -175,7 +175,7 @@ const InfoBody = (
 const WarningBody = (
   <View className="w-[90%] mb-5">
     <View>
-      <Text className="text-lg text-center">Your username is about to be permanently changed.</Text>
+      <Text className="text-lg text-center">Your Deem username is about to be permanently set.</Text>
       <Text className="text-lg text-red-600 font-semibold text-center">Are you sure?</Text>
     </View>
   </View>

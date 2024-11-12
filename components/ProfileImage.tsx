@@ -17,14 +17,14 @@ const ProfileImage: FC = () => {
 
   return (
     <View className="flex items-center">
-      <View className={cn("border-2 border-mango-400 w-28 h-28 rounded-full items-center justify-center mb-4", { "border-dashed border-stone-400": !profileImage })}>
+      <View className={cn("border-2 border-stone-300 w-28 h-28 rounded-full items-center justify-center mb-4", { "border-dashed border-stone-400": !profileImage })}>
         {!!profileImage && <Image source={{ uri: profileImage }} style={{ width: 108, height: 108, borderRadius: 54 }} />}
         <TouchableOpacity onPress={handleChange}>{!profileImage && <Ionicons name="camera-outline" size={32} color="#a8a29e" />}</TouchableOpacity>
       </View>
       {!!profileImage && (
         <View className="flex flex-row gap-2">
           <TouchableOpacity onPress={handleChange}>
-            <View className="bg-sky-600 py-1.5 !w-24 rounded-md">
+            <View className="bg-stone-800 py-1.5 !w-24 rounded-md">
               <Text className="text-md font-semibold text-white w-fit text-center">Change Pic</Text>
             </View>
           </TouchableOpacity>

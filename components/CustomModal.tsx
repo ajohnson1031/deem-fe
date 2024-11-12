@@ -23,7 +23,7 @@ const variantHeaders = {
 };
 
 const icons = {
-  [CustomModalVariant.INFO]: <Ionicons name="information-circle-sharp" size={40} color="#0284c7" />,
+  [CustomModalVariant.INFO]: <Ionicons name="information-circle-sharp" size={40} color="#0369A1" />,
   [CustomModalVariant.WARN]: <Ionicons name="warning" size={40} color="#F97316" />,
 };
 
@@ -69,7 +69,7 @@ const ModalFooter: FC<ModalFooterProps> = ({ buttonText = "Submit", onClick, onC
         <Text className="font-semibold text-stone-950">Close</Text>
       </TouchableOpacity>
       {!!onClick && (
-        <TouchableOpacity className="bg-sky-600 border-2 border-sky-600 p-2 rounded-md min-w-20 w-fit flex flex-row justify-center" onPress={onClick}>
+        <TouchableOpacity className="bg-sky-700 border-2 border-sky-700 p-2 rounded-md min-w-20 w-fit flex flex-row justify-center" onPress={onClick}>
           <Text className="font-semibold text-white">{buttonText}</Text>
         </TouchableOpacity>
       )}
