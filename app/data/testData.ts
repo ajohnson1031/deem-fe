@@ -35,7 +35,7 @@ const testWalletData = {
   activity: [
     {
       id: 1,
-      dateTime: dayjs().format("MMM. DD, YYYY|hh:ssa").toString(),
+      dateTime: dayjs().format("MMM. DD, YYYY|h:ssa").toString(),
       type: WALLET_ACTIVITY_TYPE.XRP_TO_USD,
       amount: 25,
       networkFee: 0.003,
@@ -43,7 +43,7 @@ const testWalletData = {
     },
     {
       id: 2,
-      dateTime: dayjs().format("MMM. DD, YYYY|hh:ssa").toString(),
+      dateTime: dayjs().format("MMM. DD, YYYY|h:ssa").toString(),
       type: WALLET_ACTIVITY_TYPE.USD_TO_XRP,
       amount: 12,
       networkFee: 0.00144,
@@ -51,7 +51,7 @@ const testWalletData = {
     },
     {
       id: 3,
-      dateTime: dayjs().format("MMM. DD, YYYY|hh:ssa").toString(),
+      dateTime: dayjs().format("MMM. DD, YYYY|h:ssa").toString(),
       type: WALLET_ACTIVITY_TYPE.WITHDRAW_XRP,
       amount: 20,
       networkFee: 0.0024,
@@ -59,7 +59,7 @@ const testWalletData = {
     },
     {
       id: 4,
-      dateTime: dayjs().format("MMM. DD, YYYY|hh:ssa").toString(),
+      dateTime: dayjs().format("MMM. DD, YYYY|h:ssa").toString(),
       type: WALLET_ACTIVITY_TYPE.WITHDRAW_USD,
       amount: 18,
       networkFee: 0.0024,

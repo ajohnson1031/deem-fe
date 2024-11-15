@@ -18,10 +18,10 @@ const ActivityCard: FC<ActivityCardProps> = ({ activity, wrapperClass = "" }) =>
   const CURRENCY_SYMBOL: Record<string, React.ReactNode> = {
     xrp: (
       <View className="relative -top-4">
-        <Image source={XRPLogo} style={{ width: 24, height: 24 }} />
+        <Image source={XRPLogo} style={{ width: 18, height: 18 }} />
       </View>
     ),
-    usd: <Text className="text-5xl font-extralight relative -top-1.5">$</Text>,
+    usd: <Text className="text-4xl font-extralight relative -top-2.5 -mr-1">$</Text>,
   };
 
   const typePrefix = type.slice(0, 3).toLowerCase();
@@ -44,11 +44,13 @@ const ActivityCard: FC<ActivityCardProps> = ({ activity, wrapperClass = "" }) =>
             </View>
           </View>
           <View className="flex flex-col items-end justify-between">
-            <View>
+            <View className="flex flex-col items-end">
               <Text className="text-md">{date}</Text>
               <Text className="text-md">{time}</Text>
             </View>
-            <EvilIcons name="arrow-right" size={36} color="#292524" className="relative left-1.5" />
+            <View className="relative left-1.5">
+              <EvilIcons name="arrow-right" size={28} color="#292524" />
+            </View>
           </View>
         </View>
       )}
