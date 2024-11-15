@@ -1,11 +1,11 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { Text, View } from "react-native";
-import { TestTransaction } from "./TransactionCardList";
+import { Transaction } from "./TransactionCardList";
 
 // ! TODO: Rename TestTransaction to Transaction when actual data shape is discovered
 
 interface TransactionCardProps {
-  transaction: TestTransaction;
+  transaction: Transaction;
   isLast: boolean;
 }
 
@@ -18,7 +18,7 @@ const TransactionCard: FC<TransactionCardProps> = ({ transaction: { id, descript
           <Text className={"text-stone-500"}>{description}</Text>
         </View>
         <View>
-          <Text>${amount}</Text>
+          <Text className="text-4xl font-light">${amount}</Text>
         </View>
       </View>
       {!isLast && <View className={"mx-4 h-[0.5px] bg-stone-300"} />}

@@ -1,15 +1,15 @@
-import React, { FC, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { FlatList, Text, View } from "react-native";
 import Animated, { Easing, SharedValue, useAnimatedStyle, useSharedValue, withDelay, withTiming } from "react-native-reanimated";
 import TransactionCard from "./TransactionCard";
 
-export interface TestTransaction {
+export interface Transaction {
   id: string;
   description: string;
   amount: number;
 }
 interface TransactionCardListProps {
-  transactions: TestTransaction[];
+  transactions: Transaction[];
 }
 
 const TransactionCardList: FC<TransactionCardListProps> = ({ transactions }) => {
@@ -29,7 +29,7 @@ const TransactionCardList: FC<TransactionCardListProps> = ({ transactions }) => 
   return (
     <Animated.View style={animatedStyle}>
       <View>
-        <Text className={"text-lg font-semibold mb-1"}>Latest Transactions</Text>
+        <Text className={"text-2xl mt-2 mb-4"}>Latest Transactions</Text>
       </View>
       <FlatList
         data={transactions}

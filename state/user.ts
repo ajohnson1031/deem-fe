@@ -10,8 +10,8 @@ interface User {
 }
 
 const userState = atom<User>({
-  firstname: "",
-  lastname: "",
+  firstname: "Aaron",
+  lastname: "Johnson",
   username: "",
   email: "aaron@mymail.net",
   profileImage: "https://cdn.pixabay.com/photo/2016/03/23/15/00/ice-cream-1274894_1280.jpg",

@@ -1,7 +1,7 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { View } from "react-native";
 import GiftCard, { GiftCardData, GiftCardType } from "./GiftCard";
-import TransactionCardList, { TestTransaction } from "./TransactionCardList";
+import TransactionCardList, { Transaction } from "./TransactionCardList";
 
 interface GiftCardListProps {
   data?: GiftCardData[];
@@ -27,14 +27,14 @@ const testCardData: GiftCardData[] = [
 ];
 
 // ! TODO: DELETE THIS WHEN ACTUAL DATA GETS PULLED IN
-export const testTransactionsData: Record<string, TestTransaction[]> = {
+export const testTransactionsData: Record<string, Transaction[]> = {
   "1": [
     { id: "t1", description: "Coffee Shop", amount: 5.75 },
-    { id: "t2", description: "Grocery Store", amount: 35.2 },
+    { id: "t2", description: "Grocery Store", amount: 35.23 },
   ],
   "2": [
-    { id: "t1", description: "Gas Station", amount: 40.0 },
-    { id: "t2", description: "Restaurant", amount: 65.5 },
+    { id: "t1", description: "Gas Station", amount: 40.01 },
+    { id: "t2", description: "Restaurant", amount: 65.58 },
   ],
   "3": [
     { id: "t1", description: "Online Purchase", amount: 120.75 },

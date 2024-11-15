@@ -31,8 +31,8 @@ const AvatarCard: FC<AvatarCardProps> = ({ variant = AvatarCardVariant.DEFAULT, 
   const defaultAvatar = imageSrc ? (
     <Image source={imageSrc} width={48} height={48} className={"rounded-full bg-base-50 w-12 h-12"} />
   ) : (
-    <View className={"rounded-full w-12 h-12 flex justify-center items-center"} style={{ backgroundColor: user.color || CircleColors[5] }}>
-      <Text className={"text-3xl font-bold text-white"}>{user.firstname?.slice(0, 1).toUpperCase() ?? user.email.slice(0, 1).toUpperCase()}</Text>
+    <View className={"rounded-full w-14 h-14 flex justify-center items-center"} style={{ backgroundColor: user.color || CircleColors[5] }}>
+      <Text className={"text-3xl font-medium text-white"}>{user.firstname?.slice(0, 1).toUpperCase() ?? user.email.slice(0, 1).toUpperCase()}</Text>
     </View>
   );
 
@@ -43,7 +43,7 @@ const AvatarCard: FC<AvatarCardProps> = ({ variant = AvatarCardVariant.DEFAULT, 
           {defaultAvatar}
           <View>
             <Text className={"text-stone-900 text-sm mb-0.5"}>Total Balance</Text>
-            <Text className={"text-stone-900 text-xl font-bold"}>{bodyText}</Text>
+            <Text className={"text-stone-900 text-2xl font-normal"}>{bodyText}</Text>
           </View>
         </View>
         <TouchableOpacity onPress={() => {}} className={"h-fit w-fit flex justify-center mr-1"}>

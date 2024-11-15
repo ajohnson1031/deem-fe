@@ -17,7 +17,7 @@ const CURRENCY_SYMBOL: Record<string, React.ReactNode> = {
       <Image source={XRPLogo} style={{ width: 24, height: 24 }} />
     </View>
   ),
-  usd: <Text className="text-3xl font-semibold relative -top-1.5">$</Text>,
+  usd: <Text className="text-3xl font-light relative -top-1.5">$</Text>,
 };
 
 const Wallet = () => {
@@ -41,7 +41,7 @@ const Wallet = () => {
         {/* Start Amount View */}
         <View className="flex flex-row items-end">
           <View>{CURRENCY_SYMBOL[currencyType]}</View>
-          <Text className="text-5xl font-semibold">{`${balances[currencyType].amount.toFixed(2)}`}</Text>
+          <Text className="text-5xl font-light">{`${balances[currencyType].amount.toFixed(2)}`}</Text>
         </View>
         {/* End Amount View */}
 
