@@ -53,7 +53,7 @@ const testWalletData = {
       id: 3,
       dateTime: dayjs().format("MMM. DD, YYYY|h:ssa").toString(),
       type: WALLET_ACTIVITY_TYPE.WITHDRAW_XRP,
-      amount: 20,
+      amount: "20,000",
       networkFee: 0.0024,
       deemFee: 0.0024,
     },

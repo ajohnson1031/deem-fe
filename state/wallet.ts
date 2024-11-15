@@ -5,7 +5,7 @@ export type WalletActivity = {
   id: string | number;
   dateTime: string;
   type: any;
-  amount: number;
+  amount: string | number;
   networkFee: number;
   deemFee: number;
 };

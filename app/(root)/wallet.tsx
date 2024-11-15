@@ -83,7 +83,7 @@ const Wallet = () => {
         </View>
         <View className="flex w-full h-full bg-base-200 rounded-lg items-center px-1.5 py-[3px]">
           {activity.slice(0, 3).map((item, idx) => (
-            <ActivityCard key={idx} activity={item} wrapperClass={"my-[3px] h-[31.4%]"} />
+            <ActivityCard key={idx} activity={item} wrapperClass={"my-[3px] !h-[31.6%]"} />
           ))}
         </View>
         <Pressable className="w-24 mx-auto -mt-[18px]" onPress={null}>
