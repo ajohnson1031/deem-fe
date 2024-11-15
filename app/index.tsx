@@ -2,7 +2,6 @@ import Divider from "@/components/Divider";
 import { capitalize } from "@/helpers";
 import { Link, useRouter } from "expo-router";
 import { Formik } from "formik";
-import React from "react";
 import { Text, TextInput, View } from "react-native";
 import * as Yup from "yup";
 
@@ -38,7 +37,7 @@ const Home = () => {
               <View className={"w-3/4"}>
                 <TextInput
                   autoCapitalize={"none"}
-                  className={"bg-slate-900/10 w-full p-2 rounded text-stone-900"}
+                  className={"bg-stone-900/10 w-full p-2 pb-3 rounded text-stone-900 text-base"}
                   placeholder={"Login with email..."}
                   onChangeText={handleChange("email")}
                   onBlur={handleBlur("email")}
@@ -53,7 +52,7 @@ const Home = () => {
           </Formik>
           <View className={"mt-4 bg-sky-600 py-2 px-4 rounded-md"}>
             <Link className="no-underline" href={{ pathname: "/(root)" }}>
-              <Text className={"text-white pb-4"}>Or Register</Text>
+              <Text className={"text-white pb-4 text-base"}>Or Register</Text>
             </Link>
           </View>
         </View>

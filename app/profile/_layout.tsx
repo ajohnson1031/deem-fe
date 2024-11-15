@@ -5,7 +5,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const ProfileLayout = () => {
   return (
-    <View className={"flex-1"}>
+    <View className={"flex-1 bg-base-50"}>
       <TopMenuBar />
       <GestureHandlerRootView>
         <Slot />

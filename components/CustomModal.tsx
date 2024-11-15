@@ -1,15 +1,15 @@
+import { RBSheetRef } from "@/constants/refs";
 import { Ionicons } from "@expo/vector-icons";
-import React, { FC } from "react";
-import { Modal, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import cn from "classnames";
+import React from "react";
+import { Pressable, Text, View } from "react-native";
+import RBSheet from "react-native-raw-bottom-sheet";
 
 interface CustomModalProps {
   variant: CustomModalVariant;
-  open: boolean;
   content: React.ReactNode | JSX.Element;
   footerButtonText?: string;
   onClick?: () => void;
-  onClose: () => void;
 }
 
 export enum CustomModalVariant {
@@ -27,54 +27,75 @@ const icons = {
   [CustomModalVariant.WARN]: <Ionicons name="warning" size={40} color="#F97316" />,
 };
 
-const CustomModal: FC<CustomModalProps> = ({ variant, open, content, footerButtonText, onClick, onClose }) => {
-  if (!open) return null;
+const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ variant, content, footerButtonText = "Continue", onClick }, ref) => {
+  const handleClose = () => {
+    if (ref && "current" in ref && ref.current) {
+      ref.current.close();
+    }
+  };
 
   return (
-    <Modal animationType="fade" transparent>
-      <View className="flex flex-1 flex-col items-center bg-stone-950/50">
-        <View className="w-85 my-auto px-6 bg-white rounded-lg pt-1 pb-5">
-          {/* Header */}
-          <View className="flex flex-row items-center justify-between">
-            <View className="flex gap-1 flex-row items-center py-2">
-              <View>{icons[variant]}</View>
-              <Text className="text-xl font-semibold">{variantHeaders[variant]}</Text>
-            </View>
-            <TouchableOpacity className="ml-auto" onPress={onClose}>
-              <Ionicons name="close-outline" size={32} color="black" />
-            </TouchableOpacity>
+    <RBSheet
+      ref={ref}
+      draggable
+      dragOnContent
+      height={600}
+      customStyles={{
+        container: {
+          borderTopLeftRadius: 25,
+          borderTopRightRadius: 25,
+        },
+        draggableIcon: {
+          width: 80,
+          marginTop: 15,
+        },
+      }}
+    >
+      <View className="w-full mt-3 px-[7.5%] bg-white rounded-lg pb-5">
+        {/* Header */}
+        <View className="flex flex-row items-center justify-between">
+          <View className="flex gap-1 flex-row items-center py-2 mx-auto">
+            <Text className="text-2xl">{variantHeaders[variant]}</Text>
+            <View>{icons[variant]}</View>
           </View>
+        </View>
 
-          {/* Content */}
-          <View className="flex flex-row justify-center border-t border-stone-400 pt-4">{content}</View>
+        {/* Content */}
+        <View className="flex flex-row justify-center border-t border-stone-400 pt-4">{content}</View>
 
-          {/* Footer */}
-          <ModalFooter buttonText={footerButtonText} onClick={onClick} onClose={onClose} />
+        {/* Footer */}
+        <View className="flex flex-row gap-x-4 justify-center">
+          {!!onClick && (
+            <Pressable
+              onPress={() => {
+                handleClose();
+              }}
+              className="mt-2 min-w-[40%]"
+            >
+              {({ pressed }) => (
+                <View className={cn("mt-2 p-2 border-red-700 border-2 box-border h-12 rounded-md", { "bg-red-700": pressed })}>
+                  <Text className={cn("text-lg text-red-700 text-center", { "text-white": pressed })}>Cancel</Text>
+                </View>
+              )}
+            </Pressable>
+          )}
+          <Pressable
+            onPress={() => {
+              if (!!onClick) onClick();
+              handleClose();
+            }}
+            className={cn("mt-2 min-w-[40%]", { "w-[90%]": !onClick })}
+          >
+            {({ pressed }) => (
+              <View className={cn("mt-2 p-2 bg-stone-800 h-12 rounded-md", { "bg-stone-900": pressed })}>
+                <Text className="text-lg text-white text-center">{footerButtonText}</Text>
+              </View>
+            )}
+          </Pressable>
         </View>
       </View>
-    </Modal>
+    </RBSheet>
   );
-};
-
-interface ModalFooterProps {
-  buttonText?: string;
-  onClick?: () => void;
-  onClose: () => void;
-}
-
-const ModalFooter: FC<ModalFooterProps> = ({ buttonText = "Submit", onClick, onClose }) => {
-  return (
-    <View className="flex flex-row gap-2 ml-auto mt-3">
-      <TouchableOpacity className="p-2 border-2 box-border rounded-md w-20 flex flex-row justify-center" onPress={onClose}>
-        <Text className="font-semibold text-stone-950">Close</Text>
-      </TouchableOpacity>
-      {!!onClick && (
-        <TouchableOpacity className="bg-sky-700 border-2 border-sky-700 p-2 rounded-md min-w-20 w-fit flex flex-row justify-center" onPress={onClick}>
-          <Text className="font-semibold text-white">{buttonText}</Text>
-        </TouchableOpacity>
-      )}
-    </View>
-  );
-};
+});
 
 export default CustomModal;

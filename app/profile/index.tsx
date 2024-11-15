@@ -1,6 +1,7 @@
 import CustomInput from "@/components/CustomInput";
 import CustomModal, { CustomModalVariant } from "@/components/CustomModal";
 import ProfileImage from "@/components/ProfileImage";
+import { RBSheetRef } from "@/constants/refs";
 import { NAME_VALIDATOR, USERNAME_VALIDATOR } from "@/regex";
 import { userState } from "@/state/user";
 import { Ionicons } from "@expo/vector-icons";
@@ -8,8 +9,8 @@ import cn from "classnames";
 import { Link } from "expo-router";
 import { Formik } from "formik";
 import { useAtomValue, useSetAtom } from "jotai";
-import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { useRef, useState } from "react";
+import { Pressable, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Feather } from "react-native-vector-icons";
 import * as Yup from "yup";
@@ -27,42 +28,45 @@ type FormValues = {
 };
 
 const Profile = () => {
+  const infoRef = useRef<RBSheetRef>(null);
+  const warnRef = useRef<RBSheetRef>(null);
+
   const [user, setUser] = [useAtomValue(userState), useSetAtom(userState)];
   const { firstname, lastname, username, email } = user;
 
   const [formValues, setFormValues] = useState({ firstname, lastname, username });
-  const [modalOpen, setModalOpen] = useState({ info: false, warn: false });
+
+  const handleRBSheetOpen = (ref: React.RefObject<RBSheetRef>) => {
+    ref.current?.open();
+  };
 
   const handleSubmit = (values: FormValues, errors: any) => {
     const { firstname, lastname, username } = values;
     // ? Username has not been previously saved
     if (username !== user.username) {
-      setModalOpen({ ...modalOpen, warn: true });
+      handleRBSheetOpen(warnRef);
       return;
     }
 
     // ? Only fires if values have changed
     if (firstname !== formValues.firstname && lastname !== formValues.lastname) {
       // TODO: Complete function that handles updating profile values
-      console.log(values);
       setUser({ ...user, firstname, lastname });
     }
   };
 
   return (
     <View className={"flex-1 items-center pt-20"}>
-      <CustomModal variant={CustomModalVariant.INFO} open={modalOpen.info} content={InfoBody} onClose={() => setModalOpen({ ...modalOpen, info: false })} />
+      <CustomModal ref={infoRef} variant={CustomModalVariant.INFO} content={InfoBody} footerButtonText="Okay, got it!" />
       <CustomModal
+        ref={warnRef}
         variant={CustomModalVariant.WARN}
-        open={modalOpen.warn}
         content={WarningBody}
         onClick={() => {
           // TODO: Complete function that handles updating profile values
-          console.log(formValues);
           setUser({ ...user, ...formValues });
-          setModalOpen({ ...modalOpen, warn: false });
         }}
-        onClose={() => setModalOpen({ ...modalOpen, warn: false })}
+        footerButtonText="Proceed"
       />
 
       {/* Profile Image */}
@@ -71,7 +75,11 @@ const Profile = () => {
       <View className="mt-8 pt-3 border-t border-stone-400 w-85">
         <View className="mb-6 pb-3 border-b border-stone-400 flex flex-row justify-between items-center">
           <Text className="text-lg">User Details</Text>
-          <TouchableOpacity onPress={() => setModalOpen({ ...modalOpen, info: true })}>
+          <TouchableOpacity
+            onPress={() => {
+              handleRBSheetOpen(infoRef);
+            }}
+          >
             <Ionicons name="information-circle-outline" size={24} color="#075985" />
           </TouchableOpacity>
         </View>
@@ -126,15 +134,15 @@ const Profile = () => {
               </View>
 
               {/* Submit Button */}
-              <TouchableOpacity
-                className={cn("mt-2 p-2 bg-green-500 rounded-md", { "bg-green-500/50": values.firstname.length < 3 || values.lastname.length < 3 })}
-                onPress={() => handleSubmit(values, errors)}
-                disabled={values.firstname.length < 3 || values.lastname.length < 3}
-              >
-                <View>
-                  <Text className="text-base text-white font-bold text-center">Save Changes</Text>
-                </View>
-              </TouchableOpacity>
+              <Pressable onPress={() => handleSubmit(values, errors)} disabled={values.firstname.length < 3 || values.lastname.length < 3}>
+                {({ pressed }) => (
+                  <View
+                    className={cn("mt-2 p-2 bg-stone-800 rounded-md", { "bg-stone-800/50": values.firstname.length < 3 || values.lastname.length < 3, "bg-stone-900": pressed })}
+                  >
+                    <Text className="text-lg text-white text-center">Save Changes</Text>
+                  </View>
+                )}
+              </Pressable>
             </View>
           )}
         </Formik>
@@ -146,28 +154,29 @@ const Profile = () => {
 export default Profile;
 
 const InfoBody = (
-  <View className="w-[90%]">
-    <View className="flex flex-row gap-2 mb-3">
-      <Text>&#8226;</Text>
-      <Text>First and last name fields only accept letters, hyphens, spaces and dashes. </Text>
+  <View className="w-full">
+    <View className="flex flex-row gap-2 mb-3 ">
+      <Text className="text-lg">&#8226;</Text>
+      <Text className="text-lg">First and last name fields only accept letters, hyphens, spaces and dashes. </Text>
     </View>
     <View className="flex flex-row gap-2 mb-3">
-      <Text>&#8226;</Text>
-      <Text>Username field only accepts letters, numbers, periods and dashes. </Text>
+      <Text className="text-lg">&#8226;</Text>
+      <Text className="text-lg">Username field only accepts letters, numbers, periods and dashes. </Text>
     </View>
     <View className="flex flex-row gap-2 mb-3">
-      <Text>&#8226;</Text>
-      <View>
-        <Text className="mb-1">Usernames are permanent. Once saved, your username cannot be changed from within the app.</Text>
-        <Text>
-          For any username change requests, reach out to our support team&nbsp;
-          {/* // TODO: Update with proper email address */}
-          <Link href="https://www.example.com" className="text-sky-600 underline">
-            via email
-          </Link>
-          .
-        </Text>
-      </View>
+      <Text className="text-lg">&#8226;</Text>
+      <Text className="mb-1 text-lg">Usernames are permanent. Once saved, your username cannot be changed from within the app.</Text>
+    </View>
+    <View className="flex flex-row gap-2 mb-3">
+      <Text className="text-lg">&#8226;</Text>
+      <Text className="text-lg">
+        For any username change requests, reach out to our support team&nbsp;
+        {/* // TODO: Update with proper email address */}
+        <Link href="https://www.example.com" className="text-sky-600 underline">
+          via email
+        </Link>
+        .
+      </Text>
     </View>
   </View>
 );

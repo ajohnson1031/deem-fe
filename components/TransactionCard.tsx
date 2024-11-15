@@ -21,7 +21,7 @@ const TransactionCard: FC<TransactionCardProps> = ({ transaction: { id, descript
           <Text>${amount}</Text>
         </View>
       </View>
-      {!isLast && <View className={"mx-4 h-[0.5px] bg-slate-300"} />}
+      {!isLast && <View className={"mx-4 h-[0.5px] bg-stone-300"} />}
     </>
   );
 };

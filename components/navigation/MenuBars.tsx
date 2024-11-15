@@ -73,7 +73,7 @@ const BottomMenuBar: FC<NavbarProps> = () => {
           router.push("./banking");
           setActiveTab("banking");
         }}
-        className={cn("h-14 w-14 flex justify-center items-center rounded-xl", { "bg-slate-900": activeTab === "banking" })}
+        className={cn("h-14 w-14 flex justify-center items-center rounded-xl", { "bg-stone-900": activeTab === "banking" })}
       >
         <MaterialCommunityIcons name={activeTab === "banking" ? "bank" : "bank-outline"} size={28} color={activeTab === "banking" ? "white" : "#1c1917"} />
       </TouchableOpacity>
@@ -83,7 +83,7 @@ const BottomMenuBar: FC<NavbarProps> = () => {
           router.push("./cards");
           setActiveTab("cards");
         }}
-        className={cn("h-14 w-14 flex justify-center items-center rounded-xl", { "bg-slate-900": activeTab === "cards" })}
+        className={cn("h-14 w-14 flex justify-center items-center rounded-xl", { "bg-stone-900": activeTab === "cards" })}
       >
         <MaterialCommunityIcons name={activeTab === "cards" ? "credit-card-chip" : "credit-card-chip-outline"} size={28} color={activeTab === "cards" ? "white" : "#1c1917"} />
       </TouchableOpacity>
@@ -92,7 +92,7 @@ const BottomMenuBar: FC<NavbarProps> = () => {
           router.push("./wallet");
           setActiveTab("wallet");
         }}
-        className={cn("h-14 w-14 flex justify-center items-center rounded-xl", { "bg-slate-900": activeTab === "wallet" })}
+        className={cn("h-14 w-14 flex justify-center items-center rounded-xl", { "bg-stone-900": activeTab === "wallet" })}
       >
         <Ionicons name={activeTab === "wallet" ? "wallet" : "wallet-outline"} size={28} color={activeTab === "wallet" ? "white" : "#1c1917"} />
       </TouchableOpacity>
@@ -101,7 +101,7 @@ const BottomMenuBar: FC<NavbarProps> = () => {
           router.push("../profile");
           setActiveTab("profile");
         }}
-        className={cn("h-14 w-14 flex justify-center items-center rounded-xl", { "bg-slate-900": activeTab === "profile" })}
+        className={cn("h-14 w-14 flex justify-center items-center rounded-xl", { "bg-stone-900": activeTab === "profile" })}
       >
         <FontAwesome name={activeTab === "profile" ? "user" : "user-o"} size={28} color={activeTab === "profile" ? "white" : "#1c1917"} />
       </TouchableOpacity>
