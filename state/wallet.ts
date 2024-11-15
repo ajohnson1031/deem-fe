@@ -1,10 +1,10 @@
-import { testWalletData, WALLET_ACTIVITY_TYPE, WALLET_CONVERSION_TYPE, WALLET_CURRENCY_TYPE } from "@/app/data/testData";
+import { testWalletData, WALLET_CURRENCY_TYPE } from "@/app/data/testData";
 import { atom } from "jotai";
 
-type WalletActivity = {
-  type: WALLET_ACTIVITY_TYPE;
-  conversionType?: WALLET_CONVERSION_TYPE;
-  withdrawalType?: WALLET_CURRENCY_TYPE;
+export type WalletActivity = {
+  id: string | number;
+  dateTime: string;
+  type: any;
   amount: number;
   networkFee: number;
   deemFee: number;

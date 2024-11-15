@@ -1,13 +1,15 @@
 import { WALLET_CURRENCY_TYPE } from "@/app/data/testData";
 import XRPLogo from "@/assets/images/XRPLogo.png";
+import ActivityCard from "@/components/ActivityCard";
 import { WalletCurrencyModal } from "@/components/WalletCurrencyModal";
 import { RBSheetRef } from "@/constants/refs";
 import { walletState } from "@/state/wallet";
+import { FontAwesome6 } from "@expo/vector-icons";
 import cn from "classnames";
 import { useAtomValue } from "jotai";
 import React, { useRef, useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
-import { FontAwesome6, Ionicons, MaterialCommunityIcons } from "react-native-vector-icons";
+import { AntDesign, Ionicons } from "react-native-vector-icons";
 
 const CURRENCY_SYMBOL: Record<string, React.ReactNode> = {
   xrp: (
@@ -58,7 +60,7 @@ const Wallet = () => {
             {({ pressed }) => (
               <View className={cn("flex flex-row justify-center items-center py-2.5 rounded-md bg-stone-800", { "bg-stone-900": pressed })}>
                 <Text className="text-white text-lg text-center mr-2">Convert</Text>
-                <FontAwesome6 name="money-bill-transfer" size={16} color="white" />
+                <AntDesign name="swap" size={17} color="white" />
               </View>
             )}
           </Pressable>
@@ -66,7 +68,7 @@ const Wallet = () => {
             {({ pressed }) => (
               <View className={cn("flex flex-row justify-center items-center py-2.5 rounded-md bg-stone-800", { "bg-stone-900": pressed })}>
                 <Text className="text-white text-lg text-center mr-2">Withdraw</Text>
-                <MaterialCommunityIcons name="cash-fast" size={24} color="white" />
+                <FontAwesome6 name="sack-dollar" size={18} color="white" />
               </View>
             )}
           </Pressable>
@@ -79,7 +81,11 @@ const Wallet = () => {
         <View className="mr-auto pt-3 pb-4">
           <Text className="text-2xl relative">Recent Activity</Text>
         </View>
-        <View className="flex w-full h-full bg-base-200  rounded-lg items-center"></View>
+        <View className="flex w-full h-full bg-base-200 rounded-lg items-center px-1.5 py-[3px]">
+          {activity.slice(0, 3).map((item, idx) => (
+            <ActivityCard key={idx} activity={item} wrapperClass={"my-[3px] h-[31.4%]"} />
+          ))}
+        </View>
         <Pressable className="w-24 mx-auto -mt-[18px]" onPress={null}>
           {({ pressed }) => (
             <View className={cn("p-2 bg-stone-800 rounded-md", { "bg-stone-900": pressed })}>

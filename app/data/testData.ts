@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 enum NOTIFICATION_TYPES {
   URGENT = "urgent",
   HIGH = "high",
@@ -14,18 +16,15 @@ const testNotifications = [
 ];
 
 export enum WALLET_ACTIVITY_TYPE {
-  CONVERT = "convert",
-  WITHDRAW = "withdraw",
+  WITHDRAW_XRP = "XRP → ",
+  WITHDRAW_USD = "USD → ",
+  XRP_TO_USD = "XRP → USD",
+  USD_TO_XRP = "USD → XRP",
 }
 
 export enum WALLET_CURRENCY_TYPE {
   XRP = "xrp",
   USD = "usd",
-}
-
-export enum WALLET_CONVERSION_TYPE {
-  XRP_TO_USD = "toUSD",
-  USD_TO_XRP = "toXRP",
 }
 
 const testWalletData = {
@@ -35,37 +34,34 @@ const testWalletData = {
   },
   activity: [
     {
-      type: WALLET_ACTIVITY_TYPE.CONVERT,
-      conversionType: WALLET_CONVERSION_TYPE.XRP_TO_USD,
+      id: 1,
+      dateTime: dayjs().format("MMM. DD, YYYY|hh:ssa").toString(),
+      type: WALLET_ACTIVITY_TYPE.XRP_TO_USD,
       amount: 25,
       networkFee: 0.003,
       deemFee: 0.003,
     },
     {
-      type: WALLET_ACTIVITY_TYPE.CONVERT,
-      conversionType: WALLET_CONVERSION_TYPE.USD_TO_XRP,
+      id: 2,
+      dateTime: dayjs().format("MMM. DD, YYYY|hh:ssa").toString(),
+      type: WALLET_ACTIVITY_TYPE.USD_TO_XRP,
       amount: 12,
       networkFee: 0.00144,
       deemFee: 0.00144,
     },
     {
-      type: WALLET_ACTIVITY_TYPE.WITHDRAW,
-      withdrawalType: WALLET_CURRENCY_TYPE.XRP,
+      id: 3,
+      dateTime: dayjs().format("MMM. DD, YYYY|hh:ssa").toString(),
+      type: WALLET_ACTIVITY_TYPE.WITHDRAW_XRP,
       amount: 20,
       networkFee: 0.0024,
       deemFee: 0.0024,
     },
     {
-      type: WALLET_ACTIVITY_TYPE.WITHDRAW,
-      withdrawalType: WALLET_CURRENCY_TYPE.XRP,
-      amount: 20,
-      networkFee: 0.0024,
-      deemFee: 0.0024,
-    },
-    {
-      type: WALLET_ACTIVITY_TYPE.WITHDRAW,
-      withdrawalType: WALLET_CURRENCY_TYPE.XRP,
-      amount: 20,
+      id: 4,
+      dateTime: dayjs().format("MMM. DD, YYYY|hh:ssa").toString(),
+      type: WALLET_ACTIVITY_TYPE.WITHDRAW_USD,
+      amount: 18,
       networkFee: 0.0024,
       deemFee: 0.0024,
     },
