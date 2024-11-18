@@ -1,7 +1,8 @@
 import { WALLET_CURRENCY_TYPE } from "@/app/data/testData";
 import XRPLogo from "@/assets/images/XRPLogo.png";
 import ActivityCard from "@/components/ActivityCard";
-import { WalletCurrencyModal } from "@/components/WalletCurrencyModal";
+import CurrencyCard from "@/components/CurrencyCard";
+import CustomModal, { CustomModalVariant } from "@/components/CustomModal";
 import { RBSheetRef } from "@/constants/refs";
 import { walletState } from "@/state/wallet";
 import { FontAwesome6 } from "@expo/vector-icons";
@@ -33,9 +34,19 @@ const Wallet = () => {
     setCurrencyType(currencyType);
   };
 
+  const currencyModalContent = (
+    <View className="flex w-[92.5%] mx-auto -mt-4 -mb-2">
+      <View className="flex py-3 justify-center">
+        {Object.entries(balances).map(([key, balance], idx) => (
+          <CurrencyCard key={idx} isActive={currencyType === key} currency={balance} onPress={handleCurrencyChange} />
+        ))}
+      </View>
+    </View>
+  );
+
   return (
     <View className={"flex-1 pt-32 items-center"}>
-      <WalletCurrencyModal currencyType={currencyType} onCurrencyChange={handleCurrencyChange} ref={cmRef} />
+      <CustomModal variant={CustomModalVariant.CURRENCY} height={400} content={currencyModalContent} ref={cmRef} />
 
       <View className="flex items-center gap-3 h-[31%]">
         {/* Start Amount View */}

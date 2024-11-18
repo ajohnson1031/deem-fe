@@ -62,7 +62,7 @@ const Profile = () => {
         ref={warnRef}
         variant={CustomModalVariant.WARN}
         content={WarningBody}
-        onClick={() => {
+        onPress={() => {
           // TODO: Complete function that handles updating profile values
           setUser({ ...user, ...formValues });
         }}

@@ -6,32 +6,40 @@ import { Pressable, Text, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 
 interface CustomModalProps {
+  id?: string;
+  height?: number;
   variant: CustomModalVariant;
   content: React.ReactNode | JSX.Element;
   footerButtonText?: string;
-  onClick?: () => void;
+  onPress?: () => void;
 }
 
 export enum CustomModalVariant {
   INFO = "info",
   WARN = "warn",
+  WALLET_ACTIVITY = "wallet_activity",
+  CURRENCY = "currency",
 }
-
-const variantHeaders = {
-  [CustomModalVariant.INFO]: "Things to Know...",
-  [CustomModalVariant.WARN]: "Warning!",
-};
 
 const icons = {
   [CustomModalVariant.INFO]: <Ionicons name="information-circle-sharp" size={40} color="#0369A1" />,
   [CustomModalVariant.WARN]: <Ionicons name="warning" size={40} color="#F97316" />,
+  [CustomModalVariant.WALLET_ACTIVITY]: null,
+  [CustomModalVariant.CURRENCY]: null,
 };
 
-const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ variant, content, footerButtonText = "Continue", onClick }, ref) => {
+const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ id, height = 600, variant, content, footerButtonText = "Continue", onPress }, ref) => {
   const handleClose = () => {
     if (ref && "current" in ref && ref.current) {
       ref.current.close();
     }
+  };
+
+  const variantHeaders = {
+    [CustomModalVariant.INFO]: "Things to Know...",
+    [CustomModalVariant.WARN]: "Warning!",
+    [CustomModalVariant.CURRENCY]: "Select Currency",
+    [CustomModalVariant.WALLET_ACTIVITY]: `Wallet Txn: ${id}`,
   };
 
   return (
@@ -39,7 +47,7 @@ const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ variant, c
       ref={ref}
       draggable
       dragOnContent
-      height={600}
+      height={height}
       customStyles={{
         container: {
           borderTopLeftRadius: 25,
@@ -54,9 +62,9 @@ const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ variant, c
       <View className="w-full mt-3 px-[7.5%] bg-white rounded-lg pb-5">
         {/* Header */}
         <View className="flex flex-row items-center justify-between">
-          <View className="flex gap-1 flex-row items-center py-2 mx-auto">
+          <View className="flex gap-1 flex-row items-center py-2">
             <Text className="text-2xl">{variantHeaders[variant]}</Text>
-            <View>{icons[variant]}</View>
+            {icons[variant] && <View>{icons[variant]}</View>}
           </View>
         </View>
 
@@ -65,7 +73,7 @@ const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ variant, c
 
         {/* Footer */}
         <View className="flex flex-row gap-x-4 justify-center">
-          {!!onClick && (
+          {!!onPress && (
             <Pressable
               onPress={() => {
                 handleClose();
@@ -81,10 +89,12 @@ const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ variant, c
           )}
           <Pressable
             onPress={() => {
-              if (!!onClick) onClick();
+              if (!!onPress) {
+                onPress();
+              }
               handleClose();
             }}
-            className={cn("mt-2 min-w-[40%]", { "w-[90%]": !onClick })}
+            className={cn("mt-2 min-w-[40%]", { "w-[90%]": !onPress })}
           >
             {({ pressed }) => (
               <View className={cn("mt-2 p-2 bg-stone-800 h-12 rounded-md", { "bg-stone-900": pressed })}>

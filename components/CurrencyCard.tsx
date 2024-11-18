@@ -2,7 +2,7 @@ import { WALLET_CURRENCY_TYPE } from "@/app/data/testData";
 import XRPLogo from "@/assets/images/XRPLogo.png";
 import WhiteXRPLogo from "@/assets/images/XRPLogo_White.png";
 import cn from "classnames";
-import React, { FC } from "react";
+import { FC } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
 interface CurrencyItem {
@@ -40,10 +40,10 @@ const CurrencyCard: FC<CurrencyCardProps> = ({ isActive = false, currency, onPre
   return (
     <TouchableOpacity onPress={() => onPress(type)}>
       <View className="flex flex-row justify-between items-center py-3 mb-2">
-        <View className="flex flex-row gap-3">
-          <View className={`w-12 h-12 flex flex-row justify-center items-center rounded-full ${color} text-`}>{symbols[type].lg}</View>
+        <View className="flex flex-row items-center gap-3">
+          <View className={`w-14 h-14 flex flex-row justify-center items-center rounded-full ${color} text-`}>{symbols[type].lg}</View>
           <View className="flex gap-y-0.5">
-            <Text className="text-base font-semibold text-stone-800">{name}</Text>
+            <Text className="text-lg font-medium text-stone-800">{name}</Text>
             <View className="flex flex-row items-end">
               {symbols[type].sm}
               <Text className="text-stone-700">{amount} available</Text>
