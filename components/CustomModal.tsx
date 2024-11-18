@@ -6,10 +6,10 @@ import { Pressable, Text, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 
 interface CustomModalProps {
-  id?: string;
-  height?: number;
+  id?: string | number;
   variant: CustomModalVariant;
   content: React.ReactNode | JSX.Element;
+  height?: number;
   footerButtonText?: string;
   onPress?: () => void;
 }
@@ -19,16 +19,18 @@ export enum CustomModalVariant {
   WARN = "warn",
   WALLET_ACTIVITY = "wallet_activity",
   CURRENCY = "currency",
+  ALL_WALLET_ACTIVITY = "all_wallet_activity",
 }
 
 const icons = {
   [CustomModalVariant.INFO]: <Ionicons name="information-circle-sharp" size={40} color="#0369A1" />,
   [CustomModalVariant.WARN]: <Ionicons name="warning" size={40} color="#F97316" />,
-  [CustomModalVariant.WALLET_ACTIVITY]: null,
   [CustomModalVariant.CURRENCY]: null,
+  [CustomModalVariant.WALLET_ACTIVITY]: null,
+  [CustomModalVariant.ALL_WALLET_ACTIVITY]: null,
 };
 
-const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ id, height = 600, variant, content, footerButtonText = "Continue", onPress }, ref) => {
+const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ id, variant, content, height = 600, footerButtonText = "Continue", onPress }, ref) => {
   const handleClose = () => {
     if (ref && "current" in ref && ref.current) {
       ref.current.close();
@@ -39,7 +41,8 @@ const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ id, height
     [CustomModalVariant.INFO]: "Things to Know...",
     [CustomModalVariant.WARN]: "Warning!",
     [CustomModalVariant.CURRENCY]: "Select Currency",
-    [CustomModalVariant.WALLET_ACTIVITY]: `Wallet Txn: ${id}`,
+    [CustomModalVariant.WALLET_ACTIVITY]: `Wallet Txn. No. ${id || 1}`,
+    [CustomModalVariant.ALL_WALLET_ACTIVITY]: "Wallet Txn. History",
   };
 
   return (
@@ -94,7 +97,7 @@ const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ id, height
               }
               handleClose();
             }}
-            className={cn("mt-2 min-w-[40%]", { "w-[90%]": !onPress })}
+            className={cn("mt-2 min-w-[40%]", { "w-full": !onPress })}
           >
             {({ pressed }) => (
               <View className={cn("mt-2 p-2 bg-stone-800 h-12 rounded-md", { "bg-stone-900": pressed })}>

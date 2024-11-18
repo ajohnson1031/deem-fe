@@ -2,7 +2,7 @@ import { WALLET_ACTIVITY_TYPE } from "@/app/data/testData";
 import XRPLogo from "@/assets/images/XRPLogo.png";
 import { getDateParts } from "@/helpers";
 import { WalletActivity } from "@/state/wallet";
-import { EvilIcons, FontAwesome6 } from "@expo/vector-icons";
+import { EvilIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import cn from "classnames";
 import { FC } from "react";
 import { Image, Pressable, Text, View } from "react-native";
@@ -10,10 +10,11 @@ import { Image, Pressable, Text, View } from "react-native";
 interface ActivityCardProps {
   activity: WalletActivity;
   wrapperClass?: string;
+  onPress: () => void;
 }
 
-const ActivityCard: FC<ActivityCardProps> = ({ activity, wrapperClass = "" }) => {
-  const { id, dateTime, type, amount } = activity;
+const ActivityCard: FC<ActivityCardProps> = ({ activity, wrapperClass = "", onPress }) => {
+  const { dateTime, type, amount } = activity;
   const [date, time] = getDateParts(dateTime);
 
   const CURRENCY_SYMBOL: Record<string, React.ReactNode> = {
@@ -27,13 +28,14 @@ const ActivityCard: FC<ActivityCardProps> = ({ activity, wrapperClass = "" }) =>
 
   const typePrefix = type.slice(0, 3).toLowerCase();
 
-  // TODO: Flesh out this handlePress function
-  const handlePress = () => {};
+  const handlePress = () => {
+    onPress();
+  };
 
   return (
     <Pressable className={cn("h-1/3", wrapperClass)} onPress={handlePress}>
       {({ pressed }) => (
-        <View className={cn("flex flex-row justify-between p-2 px-2.5 bg-base-50 w-full rounded-md", { "bg-green-50": pressed })}>
+        <View className={cn("flex flex-row justify-between p-2 px-2.5 bg-base-50 w-full rounded-md", { "bg-sky-50": pressed })}>
           <View className="flex flex-col items-start">
             <View className="flex flex-row items-end mb-2">
               {CURRENCY_SYMBOL[typePrefix]}
@@ -41,7 +43,8 @@ const ActivityCard: FC<ActivityCardProps> = ({ activity, wrapperClass = "" }) =>
             </View>
             <View className="flex flex-row px-2 py-1 border border-stone-800 rounded-full w-24 justify-center">
               <Text className="text-xs">{type}</Text>
-              {[WALLET_ACTIVITY_TYPE.WITHDRAW_XRP, WALLET_ACTIVITY_TYPE.WITHDRAW_USD].includes(type) && <FontAwesome6 name="sack-dollar" size={13} color="#292524" />}
+              {type === WALLET_ACTIVITY_TYPE.WITHDRAW_USD && <MaterialCommunityIcons name="bank" size={13} color="#292524" />}
+              {type === WALLET_ACTIVITY_TYPE.WITHDRAW_XRP && <MaterialCommunityIcons name="usb-flash-drive" size={13} color="#292524" />}
             </View>
           </View>
           <View className="flex flex-col items-end justify-between">

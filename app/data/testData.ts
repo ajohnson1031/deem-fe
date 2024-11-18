@@ -63,6 +63,38 @@ const testWalletData = {
       networkFee: 0.0024,
       deemFee: 0.0024,
     },
+    {
+      id: 5,
+      dateTime: new Date().toString(),
+      type: WALLET_ACTIVITY_TYPE.WITHDRAW_USD,
+      amount: 18,
+      networkFee: 0.0024,
+      deemFee: 0.0024,
+    },
+    {
+      id: 6,
+      dateTime: new Date().toString(),
+      type: WALLET_ACTIVITY_TYPE.WITHDRAW_USD,
+      amount: 18,
+      networkFee: 0.0024,
+      deemFee: 0.0024,
+    },
+    {
+      id: 7,
+      dateTime: new Date().toString(),
+      type: WALLET_ACTIVITY_TYPE.WITHDRAW_USD,
+      amount: 18,
+      networkFee: 0.0024,
+      deemFee: 0.0024,
+    },
+    {
+      id: 8,
+      dateTime: new Date().toString(),
+      type: WALLET_ACTIVITY_TYPE.WITHDRAW_USD,
+      amount: 18,
+      networkFee: 0.0024,
+      deemFee: 0.0024,
+    },
   ],
 };
 
