@@ -43,7 +43,8 @@ const WalletViewer: FC<WalletViewerProps> = () => {
   return (
     <View>
       <Pressable onPress={() => setIsEditing(!isEditing)}>
-        <View className="flex flex-row justify-end mt-2 mb-4 ">
+        <View className="flex flex-row justify-between mt-2 pb-4 border-b border-b-base-300 mb-4">
+          <Text className="text-base w-3/4">Edit your Deem wallet nickname and personal wallet details. </Text>
           <View className={cn("p-2 border-2 border-sky-800 rounded-md", { "border-mango-600": isEditing })}>
             <Text className={cn("text-base font-semibold text-sky-800", { "text-mango-600": isEditing })}>{!isEditing ? "Edit" : "Stop Editing?"}</Text>
           </View>
