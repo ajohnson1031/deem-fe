@@ -30,7 +30,7 @@ const SingleActivity: FC<SingleActivityProps> = ({ activity }) => {
       <View className="flex flex-row gap-x-1">
         <Text className="text-lg font-medium">Txn. Type: </Text>
         <View className="flex flex-row items-center">
-          <Text className="text-lg font-light">{`${isWithdrawal ? "Withdraw " : ""}${type}`}</Text>
+          <Text className="text-lg font-light">{`${isWithdrawal ? "WITHDRAW " : "CONVERT "}${type}`}</Text>
           {type === WALLET_ACTIVITY_TYPE.WITHDRAW_USD && <MaterialCommunityIcons name="bank" size={18} color="#292524" />}
           {type === WALLET_ACTIVITY_TYPE.WITHDRAW_XRP && <MaterialCommunityIcons name="usb-flash-drive" size={18} />}
         </View>
