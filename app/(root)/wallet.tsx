@@ -81,7 +81,7 @@ const Wallet = () => {
     <View className={"flex-1 pt-32 items-center"}>
       <CustomModal variant={CustomModalVariant.CURRENCY} height={400} content={currencyModalContent} ref={ctmRef} />
       <CustomModal id={currentActivity?.id} variant={CustomModalVariant.WALLET_ACTIVITY} height={500} content={currentActivityContent} ref={saRef} />
-      <CustomModal variant={CustomModalVariant.ALL_WALLET_ACTIVITY} height={SCREEN_HEIGHT - 75} content={allActivityContent} ref={allRef} />
+      <CustomModal variant={CustomModalVariant.ALL_WALLET_ACTIVITY} height={SCREEN_HEIGHT} content={allActivityContent} ref={allRef} />
 
       <View className="flex items-center gap-3 h-[31%]">
         {/* Start Amount View */}

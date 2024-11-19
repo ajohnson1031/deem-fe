@@ -64,7 +64,7 @@ const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ id, varian
     >
       <View className="w-full mt-3 px-[7.5%] bg-white rounded-lg pb-5">
         {/* Header */}
-        <View className="flex flex-row items-center justify-between">
+        <View className={cn("flex flex-row items-center justify-between", { "mt-8": variant === CustomModalVariant.ALL_WALLET_ACTIVITY })}>
           <View className="flex gap-1 flex-row items-center py-2">
             <Text className="text-2xl">{variantHeaders[variant]}</Text>
             {icons[variant] && <View>{icons[variant]}</View>}
