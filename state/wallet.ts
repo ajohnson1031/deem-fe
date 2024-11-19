@@ -6,6 +6,8 @@ export type WalletActivity = {
   dateTime: string;
   type: any;
   amount: string | number;
+  withdrawnTo?: string;
+  memo?: string;
   networkFee: number;
   deemFee: number;
 };

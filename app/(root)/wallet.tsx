@@ -10,7 +10,7 @@ import { WalletActivity, walletState } from "@/state/wallet";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import cn from "classnames";
 import { useAtomValue } from "jotai";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Dimensions, Image, Pressable, Text, View } from "react-native";
 import { AntDesign, Ionicons } from "react-native-vector-icons";
 
@@ -34,6 +34,8 @@ const Wallet = () => {
   const [currencyType, setCurrencyType] = useState<WALLET_CURRENCY_TYPE>(WALLET_CURRENCY_TYPE.XRP);
   const [currentActivity, setCurrentActivity] = useState<WalletActivity | null>(null);
   const [allRefIsCurrent, setAllRefIsCurrent] = useState<boolean>(false);
+  const [saModalHeight, setSaModalHeight] = useState<number | undefined>(undefined);
+  const [modalReady, setModalReady] = useState(false);
 
   const handleModalOpen = ({ type, activity }: { type: string; activity?: WalletActivity }) => {
     switch (type) {
@@ -43,13 +45,8 @@ const Wallet = () => {
         break;
       case "singleActivity":
         if (activity) {
+          setModalReady(false); // Prevent modal from opening prematurely
           setCurrentActivity(activity);
-          if (!!allRefIsCurrent) {
-            setAllRefIsCurrent(false);
-            ctmRef.current?.close();
-            allRef.current?.close();
-            setTimeout(() => saRef.current?.open(), 300);
-          } else saRef.current?.open();
         }
         break;
       case "allActivity":
@@ -60,9 +57,23 @@ const Wallet = () => {
         console.warn("Unknown modal type:", type);
     }
   };
+
   const handleCurrencyChange = (currencyType: WALLET_CURRENCY_TYPE) => {
     setCurrencyType(currencyType);
   };
+
+  useEffect(() => {
+    if (currentActivity) {
+      const height = currentActivity.memo !== undefined ? 550 : 470;
+      setSaModalHeight(height);
+
+      // Delay opening until height is set
+      setTimeout(() => {
+        setModalReady(true);
+        saRef.current?.open();
+      }, 0);
+    }
+  }, [currentActivity]);
 
   const currencyModalContent = (
     <View className="flex w-full mx-auto -mt-4 -mb-2">
@@ -75,12 +86,12 @@ const Wallet = () => {
   );
 
   const currentActivityContent = currentActivity ? <SingleActivity activity={currentActivity!} /> : null;
-  const allActivityContent = <AllActivity activity={activity} onCardPress={handleModalOpen} />;
+  const allActivityContent = useMemo(() => <AllActivity activity={activity} onCardPress={handleModalOpen} />, [activity]);
 
   return (
     <View className={"flex-1 pt-32 items-center"}>
       <CustomModal variant={CustomModalVariant.CURRENCY} height={400} content={currencyModalContent} ref={ctmRef} />
-      <CustomModal id={currentActivity?.id} variant={CustomModalVariant.WALLET_ACTIVITY} height={500} content={currentActivityContent} ref={saRef} />
+      <CustomModal id={currentActivity?.id} variant={CustomModalVariant.WALLET_ACTIVITY} height={saModalHeight} content={modalReady ? currentActivityContent : null} ref={saRef} />
       <CustomModal variant={CustomModalVariant.ALL_WALLET_ACTIVITY} height={SCREEN_HEIGHT} content={allActivityContent} ref={allRef} />
 
       <View className="flex items-center gap-3 h-[31%]">

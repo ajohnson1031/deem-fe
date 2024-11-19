@@ -35,7 +35,7 @@ const ActivityCard: FC<ActivityCardProps> = ({ activity, wrapperClass = "", onPr
   return (
     <Pressable className={cn("h-1/3", wrapperClass)} onPress={handlePress}>
       {({ pressed }) => (
-        <View className={cn("flex flex-row justify-between p-2 px-2.5 bg-base-50 w-full rounded-md", { "bg-sky-50": pressed })}>
+        <View className={cn("flex flex-row justify-between p-2 px-2.5 bg-base-50 w-full rounded-md", { "bg-base-100": pressed })}>
           <View className="flex flex-col items-start">
             <View className="flex flex-row items-end mb-2">
               {CURRENCY_SYMBOL[typePrefix]}
