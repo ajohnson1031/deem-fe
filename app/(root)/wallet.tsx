@@ -5,6 +5,7 @@ import AllActivity from "@/components/AllActivity";
 import CurrencyCard from "@/components/CurrencyCard";
 import CustomModal, { CustomModalVariant } from "@/components/CustomModal";
 import SingleActivity from "@/components/SingleActivity";
+import WalletViewer from "@/components/WalletViewer";
 import { RBSheetRef } from "@/constants/refs";
 import { WalletActivity, walletState } from "@/state/wallet";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -29,6 +30,7 @@ const Wallet = () => {
   const ctmRef = useRef<RBSheetRef>(null);
   const saRef = useRef<RBSheetRef>(null);
   const allRef = useRef<RBSheetRef>(null);
+  const walletRef = useRef<RBSheetRef>(null);
 
   const { balances, activity } = useAtomValue(walletState);
   const [currencyType, setCurrencyType] = useState<WALLET_CURRENCY_TYPE>(WALLET_CURRENCY_TYPE.XRP);
@@ -51,6 +53,7 @@ const Wallet = () => {
               setAllRefIsCurrent(false);
               ctmRef.current?.close();
               allRef.current?.close();
+              walletRef.current?.close();
               setTimeout(() => saRef.current?.open(), 300);
             } else {
               saRef.current?.open();
@@ -61,6 +64,9 @@ const Wallet = () => {
       case "allActivity":
         setAllRefIsCurrent(true);
         allRef.current?.open();
+        break;
+      case "wallet":
+        walletRef.current?.open();
         break;
       default:
         console.warn("Unknown modal type:", type);
@@ -88,6 +94,8 @@ const Wallet = () => {
       <CustomModal variant={CustomModalVariant.CURRENCY} height={400} content={currencyModalContent} ref={ctmRef} />
       <CustomModal id={currentActivity?.id} variant={CustomModalVariant.WALLET_ACTIVITY} height={saHeight} content={currentActivityContent} ref={saRef} />
       <CustomModal variant={CustomModalVariant.ALL_WALLET_ACTIVITY} height={SCREEN_HEIGHT} content={allActivityContent} ref={allRef} />
+      {/* // TODO: Add an onPress here */}
+      <CustomModal variant={CustomModalVariant.WALLET} height={SCREEN_HEIGHT} content={<WalletViewer />} ref={walletRef} onPress={() => void 0} footerButtonText="Save & Close" />
 
       <View className="flex items-center gap-3 h-[31%]">
         {/* Start Amount View */}
@@ -97,14 +105,24 @@ const Wallet = () => {
         </View>
         {/* End Amount View */}
 
-        {/* Start Currency Switcher */}
-        <Pressable onPress={() => handleModalOpen({ type: "currencyType" })}>
-          <View className={cn("flex flex-row gap-0.5 border border-stone-900 w-20 justify-center py-1 my-1.5 rounded-full")}>
-            <Text className="text-stone-900">{currencyType.toUpperCase()}</Text>
-            <Ionicons name="chevron-down-outline" size={16} color="#1c1917" />
-          </View>
-        </Pressable>
-        {/* End Currency Switcher */}
+        <View className="flex flex-row gap-x-3">
+          {/* Start Currency Switcher */}
+          <Pressable onPress={() => handleModalOpen({ type: "currencyType" })}>
+            <View className={cn("flex flex-row gap-0.5 border border-stone-900 w-20 justify-center py-1 my-1.5 rounded-full")}>
+              <Text className="text-stone-900">{currencyType.toUpperCase()}</Text>
+              <Ionicons name="chevron-down-outline" size={16} color="#1c1917" />
+            </View>
+          </Pressable>
+          {/* End Currency Switcher */}
+
+          {/* Start Currency Switcher */}
+          <Pressable onPress={() => handleModalOpen({ type: "wallet" })}>
+            <View className={cn("flex flex-row gap-0.5 border border-stone-900 w-12 justify-center py-1 my-1.5 rounded-full")}>
+              <Ionicons name="wallet" size={18} color="#1c1917" />
+            </View>
+          </Pressable>
+          {/* End Currency Switcher */}
+        </View>
 
         {/* Start Action Buttons */}
         <View className="flex flex-row w-[80%] gap-x-4 justify-center py-4">

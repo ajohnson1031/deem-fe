@@ -26,6 +26,10 @@ export enum WALLET_CURRENCY_TYPE {
 }
 
 const testWalletData = {
+  walletAddress: "XRkoaufoPFjnc02089doxp1zveb",
+  walletFriendlyName: undefined,
+  withdrawalWalletAddress: undefined,
+  withdrawalWalletFriendlyName: undefined,
   balances: {
     usd: { name: "U.S. Dollar", type: WALLET_CURRENCY_TYPE.USD, amount: 612.89, color: "bg-green-500" },
     xrp: { name: "Ripple XRP", type: WALLET_CURRENCY_TYPE.XRP, amount: 1000.67482, color: "bg-sky-500" },

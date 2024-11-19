@@ -20,6 +20,7 @@ export enum CustomModalVariant {
   WALLET_ACTIVITY = "wallet_activity",
   CURRENCY = "currency",
   ALL_WALLET_ACTIVITY = "all_wallet_activity",
+  WALLET = "wallet",
 }
 
 const icons = {
@@ -28,6 +29,7 @@ const icons = {
   [CustomModalVariant.CURRENCY]: null,
   [CustomModalVariant.WALLET_ACTIVITY]: null,
   [CustomModalVariant.ALL_WALLET_ACTIVITY]: null,
+  [CustomModalVariant.WALLET]: null,
 };
 
 const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ id, variant, content, height = 600, footerButtonText = "Continue", onPress }, ref) => {
@@ -43,6 +45,7 @@ const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ id, varian
     [CustomModalVariant.CURRENCY]: "Select Currency",
     [CustomModalVariant.WALLET_ACTIVITY]: `Wallet Txn. No. ${id || 1}`,
     [CustomModalVariant.ALL_WALLET_ACTIVITY]: "Wallet Txn. History",
+    [CustomModalVariant.WALLET]: "Wallet Details",
   };
 
   return (
@@ -64,7 +67,7 @@ const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ id, varian
     >
       <View className="w-full mt-3 px-[7.5%] bg-white rounded-lg pb-5">
         {/* Header */}
-        <View className={cn("flex flex-row items-center justify-between", { "mt-8": variant === CustomModalVariant.ALL_WALLET_ACTIVITY })}>
+        <View className={cn("flex flex-row items-center justify-between", { "mt-8": [CustomModalVariant.ALL_WALLET_ACTIVITY, CustomModalVariant.WALLET].includes(variant) })}>
           <View className="flex gap-1 flex-row items-center py-2">
             <Text className="text-2xl">{variantHeaders[variant]}</Text>
             {icons[variant] && <View>{icons[variant]}</View>}
@@ -81,11 +84,11 @@ const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ id, varian
               onPress={() => {
                 handleClose();
               }}
-              className="mt-2 min-w-[40%]"
+              className="mt-2 min-w-[46.5%]"
             >
               {({ pressed }) => (
-                <View className={cn("mt-2 p-2 border-red-700 border-2 box-border h-12 rounded-md", { "bg-red-700": pressed })}>
-                  <Text className={cn("text-lg text-red-700 text-center", { "text-white": pressed })}>Cancel</Text>
+                <View className={cn("mt-2 p-2 border-mango-700 border-2 box-border h-12 rounded-md", { "bg-mango-700": pressed })}>
+                  <Text className={cn("text-lg text-mango-700 text-center", { "text-white": pressed })}>Cancel</Text>
                 </View>
               )}
             </Pressable>
@@ -97,7 +100,7 @@ const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ id, varian
               }
               handleClose();
             }}
-            className={cn("mt-2 min-w-[40%]", { "w-full": !onPress })}
+            className={cn("mt-2 min-w-[46.5%]", { "w-full": !onPress })}
           >
             {({ pressed }) => (
               <View className={cn("mt-2 p-2 bg-stone-800 h-12 rounded-md", { "bg-stone-900": pressed })}>
