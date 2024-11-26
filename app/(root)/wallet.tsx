@@ -1,9 +1,10 @@
 import { WALLET_CURRENCY_TYPE } from "@/app/data/testData";
-import XRPLogo from "@/assets/images/XRPLogo.png";
 import ActivityCard from "@/components/ActivityCard";
 import AllActivity from "@/components/AllActivity";
 import CurrencyCard from "@/components/CurrencyCard";
+import CurrencySymbol from "@/components/CurrencySymbol";
 import CustomModal, { CustomModalVariant } from "@/components/CustomModal";
+import NumberPad, { NumpadVariant } from "@/components/NumberPad";
 import SingleActivity from "@/components/SingleActivity";
 import WalletViewer from "@/components/WalletViewer";
 import { RBSheetRef } from "@/constants/refs";
@@ -11,18 +12,9 @@ import { WalletActivity, walletState } from "@/state/wallet";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import cn from "classnames";
 import { useAtomValue } from "jotai";
-import React, { useRef, useState } from "react";
-import { Dimensions, Image, Pressable, Text, View } from "react-native";
+import { useRef, useState } from "react";
+import { Dimensions, Pressable, Text, View } from "react-native";
 import { AntDesign, Ionicons } from "react-native-vector-icons";
-
-const CURRENCY_SYMBOL: Record<string, React.ReactNode> = {
-  xrp: (
-    <View className="relative -top-2.5">
-      <Image source={XRPLogo} style={{ width: 24, height: 24 }} />
-    </View>
-  ),
-  usd: <Text className="text-3xl font-light relative -top-1.5">$</Text>,
-};
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 
@@ -31,14 +23,16 @@ const Wallet = () => {
   const saRef = useRef<RBSheetRef>(null);
   const allRef = useRef<RBSheetRef>(null);
   const walletRef = useRef<RBSheetRef>(null);
+  const numpadRef = useRef<RBSheetRef>(null);
 
   const { balances, activity } = useAtomValue(walletState);
   const [currencyType, setCurrencyType] = useState<WALLET_CURRENCY_TYPE>(WALLET_CURRENCY_TYPE.XRP);
   const [currentActivity, setCurrentActivity] = useState<WalletActivity | null>(null);
   const [allRefIsCurrent, setAllRefIsCurrent] = useState<boolean>(false);
   const [saHeight, setSaHeight] = useState<number>(470);
+  const [numpadMethod, setNumpadMethod] = useState<string>("");
 
-  const handleModalOpen = ({ type, activity }: { type: string; activity?: WalletActivity }) => {
+  const handleModalOpen = ({ type, activity, numpadType }: { type: string; activity?: WalletActivity; numpadType?: string }) => {
     switch (type) {
       case "currencyType":
         setAllRefIsCurrent(false);
@@ -67,6 +61,12 @@ const Wallet = () => {
         break;
       case "wallet":
         walletRef.current?.open();
+        break;
+      case "numpad":
+        if (!!numpadType) {
+          numpadRef.current?.open();
+          setNumpadMethod(numpadType);
+        }
         break;
       default:
         console.warn("Unknown modal type:", type);
@@ -97,10 +97,21 @@ const Wallet = () => {
       {/* // TODO: Add an onPress here */}
       <CustomModal variant={CustomModalVariant.WALLET} height={SCREEN_HEIGHT} content={<WalletViewer />} ref={walletRef} onPress={() => void 0} footerButtonText="Save & Close" />
 
+      <CustomModal
+        variant={CustomModalVariant.NUMPAD}
+        height={SCREEN_HEIGHT}
+        // TODO: Dynamicize this
+        content={<NumberPad variant={numpadMethod === "Convert" ? NumpadVariant.CONVERT : NumpadVariant.WITHDRAW} currencyType={currencyType} />}
+        ref={numpadRef}
+        onPress={() => void 0}
+        // TODO: Dynamicize this
+        footerButtonText={numpadMethod}
+      />
+
       <View className="flex items-center gap-3 h-[31%]">
         {/* Start Amount View */}
         <View className="flex flex-row items-end">
-          <View>{CURRENCY_SYMBOL[currencyType]}</View>
+          <View>{CurrencySymbol(currencyType)}</View>
           <Text className="text-5xl font-light">{`${balances[currencyType].amount.toFixed(2)}`}</Text>
         </View>
         {/* End Amount View */}
@@ -126,7 +137,7 @@ const Wallet = () => {
 
         {/* Start Action Buttons */}
         <View className="flex flex-row w-[80%] gap-x-4 justify-center py-4">
-          <Pressable onPress={null} className="w-1/2">
+          <Pressable onPress={() => handleModalOpen({ type: "numpad", numpadType: "Convert" })} className="w-1/2">
             {({ pressed }) => (
               <View className={cn("flex flex-row justify-center items-center py-2.5 rounded-md bg-stone-800", { "bg-stone-900": pressed })}>
                 <Text className="text-white text-lg text-center mr-2">Convert</Text>
@@ -134,7 +145,7 @@ const Wallet = () => {
               </View>
             )}
           </Pressable>
-          <Pressable onPress={null} className="w-1/2">
+          <Pressable onPress={() => handleModalOpen({ type: "numpad", numpadType: "Withdraw" })} className="w-1/2">
             {({ pressed }) => (
               <View className={cn("flex flex-row justify-center items-center py-2.5 rounded-md bg-stone-800", { "bg-stone-900": pressed })}>
                 <Text className="text-white text-lg text-center mr-2">Withdraw</Text>

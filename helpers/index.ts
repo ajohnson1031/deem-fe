@@ -1,6 +1,6 @@
 import { WalletActivity } from "@/state/wallet";
 import dayjs from "dayjs";
-
+import { Animated, Vibration } from "react-native";
 /**
  * Capitalize the first letter of a strong
  */
@@ -54,4 +54,38 @@ const getSectionTitles = (sections: SectionListData[]) => {
   return titles;
 };
 
-export { capitalize, getDateParts, getSectionTitles, groupWalletActivityByMonthAndYear };
+const _shakeAnimation = (ref: Animated.Value) => {
+  Animated.sequence([
+    Animated.timing(ref, {
+      toValue: 5,
+      duration: 20,
+      useNativeDriver: true,
+    }),
+    Animated.timing(ref, {
+      toValue: -5,
+      duration: 20,
+      useNativeDriver: true,
+    }),
+    Animated.timing(ref, {
+      toValue: 5,
+      duration: 20,
+      useNativeDriver: true,
+    }),
+    Animated.timing(ref, {
+      toValue: 0,
+      duration: 20,
+      useNativeDriver: true,
+    }),
+  ]).start();
+};
+
+const _causeBuzz = (buzzDuration: number = 250) => {
+  Vibration.vibrate(buzzDuration);
+};
+
+const _buzzAndShake = (ref: Animated.Value, buzzDuration: number = 250) => {
+  _causeBuzz(buzzDuration);
+  _shakeAnimation(ref);
+};
+
+export { _buzzAndShake, _causeBuzz, _shakeAnimation, capitalize, getDateParts, getSectionTitles, groupWalletActivityByMonthAndYear };

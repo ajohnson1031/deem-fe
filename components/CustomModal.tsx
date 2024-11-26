@@ -21,6 +21,7 @@ export enum CustomModalVariant {
   CURRENCY = "currency",
   ALL_WALLET_ACTIVITY = "all_wallet_activity",
   WALLET = "wallet",
+  NUMPAD = "numpad",
 }
 
 const icons = {
@@ -30,6 +31,7 @@ const icons = {
   [CustomModalVariant.WALLET_ACTIVITY]: null,
   [CustomModalVariant.ALL_WALLET_ACTIVITY]: null,
   [CustomModalVariant.WALLET]: null,
+  [CustomModalVariant.NUMPAD]: null,
 };
 
 const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ id, variant, content, height = 600, footerButtonText = "Continue", onPress }, ref) => {
@@ -46,6 +48,7 @@ const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ id, varian
     [CustomModalVariant.WALLET_ACTIVITY]: `Wallet Txn. No. ${id || 1}`,
     [CustomModalVariant.ALL_WALLET_ACTIVITY]: "Wallet Txn. History",
     [CustomModalVariant.WALLET]: "Wallet Details",
+    [CustomModalVariant.NUMPAD]: null,
   };
 
   return (
@@ -67,12 +70,14 @@ const CustomModal = React.forwardRef<RBSheetRef, CustomModalProps>(({ id, varian
     >
       <View className="w-full mt-3 px-[7.5%] bg-white rounded-lg pb-5">
         {/* Header */}
-        <View className={cn("flex flex-row items-center justify-between", { "mt-8": [CustomModalVariant.ALL_WALLET_ACTIVITY, CustomModalVariant.WALLET].includes(variant) })}>
-          <View className="flex gap-1 flex-row items-center py-2">
-            <Text className="text-2xl">{variantHeaders[variant]}</Text>
-            {icons[variant] && <View>{icons[variant]}</View>}
+        {!!variantHeaders[variant] && (
+          <View className={cn("flex flex-row items-center justify-between", { "mt-8": [CustomModalVariant.ALL_WALLET_ACTIVITY, CustomModalVariant.WALLET].includes(variant) })}>
+            <View className="flex gap-1 flex-row items-center py-2">
+              <Text className="text-2xl">{variantHeaders[variant]}</Text>
+              {icons[variant] && <View>{icons[variant]}</View>}
+            </View>
           </View>
-        </View>
+        )}
 
         {/* Content */}
         <View className="flex flex-row justify-center border-t border-stone-400 pt-4">{content}</View>

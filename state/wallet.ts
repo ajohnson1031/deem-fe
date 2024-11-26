@@ -19,9 +19,9 @@ type WalletBalance = {
 
 interface WalletProps {
   walletAddress?: string;
-  walletFriendlyName?: string;
+  walletNickname?: string;
   withdrawalWalletAddress?: string;
-  withdrawalWalletFriendlyName?: string;
+  withdrawalWalletNickname?: string;
   balances: WalletBalance;
   activity: WalletActivity[];
 }

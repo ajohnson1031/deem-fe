@@ -12,23 +12,23 @@ import CustomInput from "./CustomInput";
 interface WalletViewerProps {}
 
 const validationSchema = Yup.object().shape({
-  walletFriendlyName: Yup.string(),
+  walletNickname: Yup.string(),
   withdrawalWalletAddress: Yup.string(),
-  withdrawalFriendlyName: Yup.string(),
+  withdrawalNickname: Yup.string(),
 });
 
 type FormValues = {
-  walletFriendlyName?: string;
+  walletNickname?: string;
   withdrawalWalletAddress?: string;
-  withdrawalWalletFriendlyName?: string;
+  withdrawalWalletNickname?: string;
 };
 
 const WalletViewer: FC<WalletViewerProps> = () => {
   const [wState, setWState] = [useAtomValue(walletState), useSetAtom(walletState)];
-  const { walletAddress, walletFriendlyName, withdrawalWalletAddress, withdrawalWalletFriendlyName } = wState;
+  const { walletAddress, walletNickname, withdrawalWalletAddress, withdrawalWalletNickname } = wState;
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isCopying, setIsCopying] = useState<Record<string, boolean>>({ wallet: false, withdrawalWallet: false });
-  const [formValues, setFormValues] = useState<FormValues>({ walletFriendlyName, withdrawalWalletAddress, withdrawalWalletFriendlyName });
+  const [formValues, setFormValues] = useState<FormValues>({ walletNickname, withdrawalWalletAddress, withdrawalWalletNickname });
 
   const handleCopy = ({ text, toCopy }: { text?: string; toCopy: string }) => {
     Clipboard.setStringAsync(text || "");
@@ -44,13 +44,13 @@ const WalletViewer: FC<WalletViewerProps> = () => {
     <View>
       <Pressable onPress={() => setIsEditing(!isEditing)}>
         <View className="flex flex-row justify-between mt-2 pb-4 border-b border-b-base-300 mb-4">
-          <Text className="text-base w-3/4">Edit your Deem wallet nickname and personal wallet details. </Text>
-          <View className={cn("p-2 border-2 border-sky-800 rounded-md", { "border-mango-600": isEditing })}>
+          <Text className="text-base w-1/2">Edit your Deem wallet nickname and personal wallet details. </Text>
+          <View className={cn("p-2 border-2 border-sky-800 rounded-md max-h-12", { "border-mango-600": isEditing })}>
             <Text className={cn("text-base font-semibold text-sky-800", { "text-mango-600": isEditing })}>{!isEditing ? "Edit" : "Stop Editing?"}</Text>
           </View>
         </View>
       </Pressable>
-      <Formik initialValues={{ walletFriendlyName, withdrawalWalletAddress, withdrawalWalletFriendlyName }} validationSchema={validationSchema} onSubmit={() => void 0}>
+      <Formik initialValues={{ walletNickname, withdrawalWalletAddress, withdrawalWalletNickname }} validationSchema={validationSchema} onSubmit={() => void 0}>
         {({ handleChange, values, errors }) => (
           <>
             <View>
@@ -75,14 +75,14 @@ const WalletViewer: FC<WalletViewerProps> = () => {
                 iconSide="right"
               />
               <CustomInput
-                label="Deem Wallet Friendly Name"
-                value={values.walletFriendlyName}
+                label="Deem Wallet Nickname"
+                value={values.walletNickname}
                 onChange={(value: string) => {
-                  handleChange("walletFriendlyName")(value);
-                  setFormValues({ ...formValues, walletFriendlyName: value });
-                  setWState({ ...wState, walletFriendlyName: value });
+                  handleChange("walletNickname")(value);
+                  setFormValues({ ...formValues, walletNickname: value });
+                  setWState({ ...wState, walletNickname: value });
                 }}
-                placeholder="Enter wallet friendly name..."
+                placeholder="Enter wallet Nickname..."
                 autoCapitalize="none"
                 editable={isEditing}
               />
@@ -118,14 +118,14 @@ const WalletViewer: FC<WalletViewerProps> = () => {
                 iconSide="right"
               />
               <CustomInput
-                label="My Wallet Friendly Name"
-                value={values.withdrawalWalletFriendlyName}
+                label="My Wallet Nickname"
+                value={values.withdrawalWalletNickname}
                 onChange={(value: string) => {
-                  handleChange("withdrawalWalletFriendlyName")(value);
-                  setFormValues({ ...formValues, withdrawalWalletFriendlyName: value });
-                  setWState({ ...wState, withdrawalWalletFriendlyName: value });
+                  handleChange("withdrawalWalletNickname")(value);
+                  setFormValues({ ...formValues, withdrawalWalletNickname: value });
+                  setWState({ ...wState, withdrawalWalletNickname: value });
                 }}
-                placeholder="Enter your wallet friendly name..."
+                placeholder="Enter your wallet Nickname..."
                 autoCapitalize="none"
                 editable={isEditing}
               />
